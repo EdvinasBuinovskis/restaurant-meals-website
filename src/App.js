@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
@@ -7,6 +6,7 @@ import Header from './components/Header';
 
 import RestaurantListScreen from './screens/RestaurantListScreen';
 import MealListScreen from './screens/MealListScreen';
+import MealScreen from './screens/MealScreen';
 
 function App() {
   return (
@@ -17,7 +17,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={RestaurantListScreen}></Route>
             <Route path="/restaurants" component={RestaurantListScreen}></Route>
-            <Route path="/meals" component={MealListScreen}></Route>
+            <Route exact path="/meals" component={MealListScreen}></Route>
+            <Route exact path="/meals/:id" component={MealScreen}></Route>
           </Switch>
         </div>
       </BrowserRouter>
