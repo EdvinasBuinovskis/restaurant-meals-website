@@ -32,12 +32,14 @@ export default function Activity() {
         }
     ];
     function handleClick() {
-        const value = metValues.filter(obj => obj.activityName === activity)[0].met;
-        console.log("metValue:", value);
-        console.log("weight: ", weight);
-        console.log("activity: ", activity);
-        setMinutes(value * 3.5 * weight / 200);
-        console.log("minutes: ", minutes);
+        if (activity != "Choose activity" && weight != '') {
+            const value = metValues.filter(obj => obj.activityName === activity)[0].met;
+            console.log("metValue:", value);
+            console.log("weight: ", weight);
+            console.log("activity: ", activity);
+            setMinutes(value * 3.5 * weight / 200);
+            console.log("minutes: ", minutes);
+        }
     }
 
     return (

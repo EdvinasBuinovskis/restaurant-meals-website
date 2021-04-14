@@ -11,7 +11,8 @@ import {
     // DropdownToggle,
     // DropdownMenu,
     // DropdownItem,
-    NavbarText
+    NavbarText,
+    Button
 } from 'reactstrap';
 import { faUtensils } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -59,6 +60,8 @@ const Header = () => {
                         </UncontrolledDropdown> */}
                     </Nav>
                     <NavbarText>User Name</NavbarText>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <Button href="/login">Login</Button>
                 </Collapse>
             </Navbar>
         </div>
