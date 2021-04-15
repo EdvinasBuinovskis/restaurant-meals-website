@@ -1,26 +1,20 @@
 import React, { useState } from 'react';
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    // UncontrolledDropdown,
-    // DropdownToggle,
-    // DropdownMenu,
-    // DropdownItem,
-    NavbarText,
-    Button
-} from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, NavbarText, Button } from 'reactstrap';
 import { faUtensils } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch, useSelector } from 'react-redux';
+import { signout } from '../redux/actions/userActions';
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
-
     const toggle = () => setIsOpen(!isOpen);
+
+    const userSignin = useSelector(state => state.userSignin);
+    const { userInfo } = userSignin;
+    const dispatch = useDispatch();
+    const signoutHandler = () => {
+        dispatch(signout());
+    }
 
     return (
         <div>
@@ -35,33 +29,25 @@ const Header = () => {
                         <NavItem>
                             <NavLink href="/meals">Meals</NavLink>
                         </NavItem>
-                        <NavItem>
-                            <NavLink href="/favorites">Favorites</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="/favorites">My meals</NavLink>
-                        </NavItem>
-                        {/* <UncontrolledDropdown nav inNavbar>
-                            <DropdownToggle nav caret>
-                                Options
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                                <DropdownItem>
-                                    Option 1
-                            </DropdownItem>
-                                <DropdownItem>
-                                    Option 2
-                            </DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem>
-                                    Reset
-                            </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown> */}
+                        {
+                            userInfo ? (
+                                <div>
+                                    <NavItem>
+                                        <NavLink href="/favorites">Favorites</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink href="/favorites">My meals</NavLink>
+                                    </NavItem>
+                                    <NavbarText >{userInfo.name}</NavbarText>
+                                    <Button href="#signout" onClick={signoutHandler}>Log out</Button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <Button href="/signin">Log in</Button>
+                                </div>
+                            )
+                        }
                     </Nav>
-                    <NavbarText>User Name</NavbarText>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <Button href="/login">Login</Button>
                 </Collapse>
             </Navbar>
         </div>

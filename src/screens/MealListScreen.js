@@ -41,7 +41,7 @@ export default function RestaurantListScreen() {
                             <div>
                                 <ListGroup>
                                     {filterMeals().map(meal => (
-                                        <Meal key={meal.id} meal={meal}></Meal>
+                                        <Meal key={meal._id} meal={meal}></Meal>
                                     ))}
                                 </ListGroup>
                             </div>

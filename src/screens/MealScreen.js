@@ -33,15 +33,15 @@ export default function MealScreen(props) {
                                         <CardImg top width="100%" src={image} alt="failed to load photo :/" />
                                         <CardBody>
                                             <CardTitle tag="h5">{meal.name}</CardTitle>
-                                            <CardText tag="h6">Kcal: {meal.phone}</CardText>
-                                            <CardText tag="h6">Protein:  {meal.address.zipcode}</CardText>
-                                            <CardText tag="h6">Fat: {meal.address.geo.lat}</CardText>
-                                            <CardText tag="h6">Carbs: {meal.address.geo.lng}</CardText>
+                                            <CardText tag="h6">Kcal: {meal.kcal}</CardText>
+                                            <CardText tag="h6">Protein:  {meal.protein}</CardText>
+                                            <CardText tag="h6">Fat: {meal.fat}</CardText>
+                                            <CardText tag="h6">Carbs: {meal.carbohydrates}</CardText>
                                         </CardBody>
                                     </Card>
                                 </Col>
                                 <Col md={{ size: 4, offset: 1 }}>
-                                    <Activity />
+                                    <Activity kcal={meal.kcal} />
                                 </Col>
                             </Row>
                         </div>

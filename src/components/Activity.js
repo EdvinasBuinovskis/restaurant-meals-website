@@ -1,13 +1,15 @@
+/* eslint-disable react/prop-types */
 import { faGrinBeamSweat } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Card, CardBody, CardText, CardTitle, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Button } from 'reactstrap'
 
-export default function Activity() {
+export default function Activity({ kcal }) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [activity, setActivity] = useState('Choose activity');
     const [weight, setWeight] = useState('');
     const [minutes, setMinutes] = useState('');
+    const [minOrH, setMinOrH] = useState('minutes');
     const toggle = () => setDropdownOpen(prevState => !prevState);
 
     // useEffect(() => {
@@ -34,11 +36,22 @@ export default function Activity() {
     function handleClick() {
         if (activity != "Choose activity" && weight != '') {
             const value = metValues.filter(obj => obj.activityName === activity)[0].met;
-            console.log("metValue:", value);
-            console.log("weight: ", weight);
-            console.log("activity: ", activity);
-            setMinutes(value * 3.5 * weight / 200);
-            console.log("minutes: ", minutes);
+            const kcalPerMin = value * 3.5 * weight / 200;
+            const activityMin = Math.round(kcal / kcalPerMin);
+            if (activityMin >= 60) {
+                // setMinutes(Math.round(activityMin / 60, 1));
+                const hours = Math.floor(activityMin / 60);
+                const minutes = activityMin % 60;
+                if (minutes <= 9) {
+                    setMinutes(`${hours}:0${minutes}`);
+                } else {
+                    setMinutes(`${hours}:${minutes}`);
+                }
+                setMinOrH("hour");
+            } else {
+                setMinutes(activityMin);
+                setMinOrH("minutes");
+            }
         }
     }
 
@@ -51,7 +64,7 @@ export default function Activity() {
                         activity === "Choose activity" || minutes === "" ? (
                             <CardText tag="h5"><FontAwesomeIcon icon={faGrinBeamSweat} />Choose activity and enter your weight</CardText>
                         ) : (
-                            <CardText tag="h5"><FontAwesomeIcon icon={faGrinBeamSweat} />{activity} for {minutes} minutes</CardText>
+                            <CardText tag="h5"><FontAwesomeIcon icon={faGrinBeamSweat} />{activity} for {minutes} {minOrH}</CardText>
                         )
                     }
                     {/* <CardText tag="h5"><FontAwesomeIcon icon={faGrinBeamSweat} />{activity} for {minutes} minutes</CardText> */}

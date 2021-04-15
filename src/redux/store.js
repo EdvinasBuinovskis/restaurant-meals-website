@@ -2,6 +2,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from '@reduxjs
 import thunk from 'redux-thunk';
 import { mealListReducer, mealDetailsReducer } from './reducers/mealReducers';
 import { restaurantListReducer, restaurantDetailsReducer } from './reducers/restaurantReducers';
+import { userDetailsReducer, userRegisterReducer, userSigninReducer } from './reducers/userReducers'
 
 //pridet authentikacija
 const initialState = {
@@ -14,7 +15,10 @@ const reducer = combineReducers({
   mealList: mealListReducer,
   mealDetails: mealDetailsReducer,
   restaurantList: restaurantListReducer,
-  restaurantDetails: restaurantDetailsReducer
+  restaurantDetails: restaurantDetailsReducer,
+  userSignin: userSigninReducer,
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)));
