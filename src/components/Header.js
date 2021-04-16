@@ -36,7 +36,7 @@ const Header = () => {
                                         <NavLink href="/favorites">Favorites</NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink href="/favorites">My meals</NavLink>
+                                        <NavLink href="/mymeals">My meals</NavLink>
                                     </NavItem>
                                     <NavbarText >{userInfo.name}</NavbarText>
                                     <Button href="#signout" onClick={signoutHandler}>Log out</Button>

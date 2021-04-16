@@ -31,6 +31,12 @@ export default function RegisterScreen(props) {
     };
 
     useEffect(() => {
+        if (userInfo) {
+            props.history.push('/');
+        }
+    }, [])
+
+    useEffect(() => {
         if (userInfo && error) {
             props.history.push(redirect);
         }
@@ -41,7 +47,7 @@ export default function RegisterScreen(props) {
             <Form onSubmit={submitHandler}>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Input plaintext value="Register" />
+                        <Label>Register</Label>
                     </Col>
                 </FormGroup>
                 {loading && <LoadingBox></LoadingBox>}

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,7 +42,7 @@ export default function RestaurantScreen(props) {
                                 <Container fluid>
                                     <img top src={image} alt="failed to load photo :/"></img>
                                     <h1 className="display-3">{restaurant.name}</h1>
-                                    <p className="lead">{restaurant.company.catchPhrase}</p>
+                                    <p className="lead">{restaurant.description}</p>
                                 </Container>
                             </Jumbotron>
                         </div>
@@ -51,8 +52,8 @@ export default function RestaurantScreen(props) {
                     (
                         <div>
                             <ListGroup>
-                                {meals.filter(obj => obj.company.name === restaurant.company.name).map(meal => (
-                                    <Meal key={meal.id} meal={meal}></Meal>
+                                {meals.filter(obj => obj.restaurant_id === restaurant._id).map(meal => (
+                                    <Meal key={meal._id} meal={meal}></Meal>
                                 ))}
                             </ListGroup>
                         </div>

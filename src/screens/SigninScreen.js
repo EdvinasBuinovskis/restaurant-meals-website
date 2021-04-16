@@ -30,12 +30,14 @@ export default function LoginScreen(props) {
         }
     }, [props.history, redirect, userInfo]);
 
+
+
     return (
         <div md={{ size: 4, offset: 1 }}>
             <Form onSubmit={submitHandler}>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Input plaintext value="Log In" />
+                        <Label>Log in</Label>
                     </Col>
                 </FormGroup>
                 {loading && <LoadingBox></LoadingBox>}

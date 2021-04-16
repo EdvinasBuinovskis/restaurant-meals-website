@@ -11,6 +11,9 @@ import RestaurantScreen from './screens/RestaurantScreen';
 import SigninScreen from './screens/SigninScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import PrivateRoute from './components/PrivateRoute';
+import UserMealScreen from './screens/UserMealScreen';
+import MealCreateScreen from './screens/MealCreateScreen';
+import PublicRoute from './components/PublicRoute';
 
 function App() {
   return (
@@ -24,10 +27,12 @@ function App() {
             <Route exact path="/restaurants/:id" component={RestaurantScreen}></Route>
             <Route exact path="/meals" component={MealListScreen}></Route>
             <Route exact path="/meals/:id" component={MealScreen}></Route>
-            <Route exact path="/signin" component={SigninScreen}></Route>
-            <Route exact path="/register" component={RegisterScreen}></Route>
+            <PublicRoute exact path="/signin" component={SigninScreen}></PublicRoute>
+            <PublicRoute exact path="/register" component={RegisterScreen}></PublicRoute>
             <PrivateRoute exact path="/favorites" component={FavoritesScreen}></PrivateRoute>
             <PrivateRoute exact path="/mymeals" component={UserMealScreen}></PrivateRoute>
+            <PrivateRoute exact path="/mymeals/add" component={MealCreateScreen}></PrivateRoute>
+
           </Switch>
         </div>
       </BrowserRouter>
@@ -38,12 +43,6 @@ function App() {
 function FavoritesScreen() {
   return (
     <h1>FavoritesScreen</h1>
-  )
-}
-
-function UserMealScreen() {
-  return (
-    <h1>UserMealScreen</h1>
   )
 }
 

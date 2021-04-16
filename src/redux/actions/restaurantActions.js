@@ -6,7 +6,7 @@ export const listRestaurants = () => async (dispatch) => {
         type: RESTAURANT_LIST_REQUEST
     });
     try {
-        const { data } = await Axios.get('https://jsonplaceholder.typicode.com/users');
+        const { data } = await Axios.get('/api/restaurants');
         dispatch({ type: RESTAURANT_LIST_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: RESTAURANT_LIST_FAIL, payload: error.message });
@@ -16,7 +16,7 @@ export const listRestaurants = () => async (dispatch) => {
 export const detailsRestaurant = (restaurantId) => async (dispatch) => {
     dispatch({ type: RESTAURANT_DETAILS_REQUEST, payload: restaurantId });
     try {
-        const { data } = await Axios.get(`https://jsonplaceholder.typicode.com/users/${restaurantId}`);
+        const { data } = await Axios.get(`/api/restaurants/${restaurantId}`);
         dispatch({ type: RESTAURANT_DETAILS_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: RESTAURANT_DETAILS_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message });

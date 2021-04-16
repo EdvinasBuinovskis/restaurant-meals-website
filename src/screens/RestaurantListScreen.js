@@ -38,7 +38,7 @@ export default function RestaurantListScreen() {
                             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                             <div className="row center">
                                 {filterRestaurants().map(restaurant => (
-                                    <Restaurant key={restaurant.id} restaurant={restaurant}></Restaurant>
+                                    <Restaurant key={restaurant._id} restaurant={restaurant}></Restaurant>
                                 ))}
                             </div>
                         </div>
