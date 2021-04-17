@@ -14,6 +14,8 @@ import PrivateRoute from './components/PrivateRoute';
 import UserMealScreen from './screens/UserMealScreen';
 import MealCreateScreen from './screens/MealCreateScreen';
 import PublicRoute from './components/PublicRoute';
+import MealEditScreen from './screens/MealEditScreen';
+import FavoritesScreen from './screens/FavoritesScreen';
 
 function App() {
   return (
@@ -32,18 +34,13 @@ function App() {
             <PrivateRoute exact path="/favorites" component={FavoritesScreen}></PrivateRoute>
             <PrivateRoute exact path="/mymeals" component={UserMealScreen}></PrivateRoute>
             <PrivateRoute exact path="/mymeals/add" component={MealCreateScreen}></PrivateRoute>
+            <PrivateRoute exact path="/mymeals/:id/edit" component={MealEditScreen}></PrivateRoute>
 
           </Switch>
         </div>
       </BrowserRouter>
     </div>
   );
-}
-
-function FavoritesScreen() {
-  return (
-    <h1>FavoritesScreen</h1>
-  )
 }
 
 export default App;
