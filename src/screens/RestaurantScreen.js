@@ -3,13 +3,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron, ListGroup } from 'reactstrap';
+import { Button, Container, Jumbotron, ListGroup } from 'reactstrap';
 import LoadingBox from '../components/LoadingBox';
 import Meal from '../components/Meal';
 import MessageBox from '../components/MessageBox';
-import image from '../images/image1.jpg';
 import { listMeals } from '../redux/actions/mealActions';
-import { detailsRestaurant } from '../redux/actions/restaurantActions';
+import { detailsRestaurant, deleteRestaurant } from '../redux/actions/restaurantActions';
 
 export default function RestaurantScreen(props) {
     const dispatch = useDispatch();
@@ -21,14 +20,32 @@ export default function RestaurantScreen(props) {
     const mealList = useSelector(state => state.mealList);
     const { loading: loadingList, error: errorList, meals: meals } = mealList;
 
+    const userSignin = useSelector((state) => state.userSignin);
+    const { userInfo } = userSignin;
+
+
+    const restaurantDelete = useSelector(state => state.restaurantDelete);
+    const { success: successDelete } = restaurantDelete;
+
 
     useEffect(() => {
         dispatch(detailsRestaurant(restaurantId));
         dispatch(listMeals());
     }, [dispatch, restaurantId]);
 
+    useEffect(() => {
+        if (successDelete)
+            props.history.push(`/restaurants`)
+    }, [successDelete]);
+
     // const mealsFiltered = meals.filter(obj => obj.company === restaurant.company);
     // console.log("meals: ", meals);
+
+    const deleteHandler = () => {
+        if (window.confirm('Are you sure you want to delete?')) {
+            dispatch(deleteRestaurant(restaurantId));
+        }
+    };
 
 
     return (
@@ -37,27 +54,46 @@ export default function RestaurantScreen(props) {
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     (
                         <div>
-                            <Link to="/restaurants">Go back</Link>
-                            <Jumbotron fluid>
-                                <Container fluid>
-                                    <img top src={image} alt="failed to load photo :/"></img>
-                                    <h1 className="display-3">{restaurant.name}</h1>
-                                    <p className="lead">{restaurant.description}</p>
-                                </Container>
-                            </Jumbotron>
+                            <div>
+                                <Link to="/restaurants">Go back</Link>
+                                {
+                                    userInfo ? (
+                                        <div>
+                                            {userInfo.isAdmin ? (
+                                                <div>
+                                                    <Button href={`/restaurants/${restaurant._id}/edit`} >Edit</Button>
+                                                    <Button onClick={() => deleteHandler()}>Delete</Button>
+                                                </div>
+                                            ) : (
+                                                <div></div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )
+                                }
+                                <Jumbotron fluid>
+                                    <Container fluid>
+                                        <img top src={restaurant.image} alt="failed to load photo :/"></img>
+                                        <h1 className="display-3">{restaurant.name}</h1>
+                                        <p className="lead">{restaurant.description}</p>
+                                    </Container>
+                                </Jumbotron>
+                            </div>
+                            {loadingList ? (<LoadingBox></LoadingBox>) :
+                                errorList ? (<MessageBox variant="danger">{error}</MessageBox>) :
+                                    (
+                                        <div>
+                                            <ListGroup>
+                                                {meals.filter(obj => obj.restaurant_id === restaurant._id).map(meal => (
+                                                    <Meal key={meal._id} meal={meal}></Meal>
+                                                ))}
+                                            </ListGroup>
+                                        </div>
+                                    )}
                         </div>
                     )}
-            {loadingList ? (<LoadingBox></LoadingBox>) :
-                errorList ? (<MessageBox variant="danger">{error}</MessageBox>) :
-                    (
-                        <div>
-                            <ListGroup>
-                                {meals.filter(obj => obj.restaurant_id === restaurant._id).map(meal => (
-                                    <Meal key={meal._id} meal={meal}></Meal>
-                                ))}
-                            </ListGroup>
-                        </div>
-                    )}
+
         </div>
     );
 }

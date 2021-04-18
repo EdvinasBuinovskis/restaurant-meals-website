@@ -6,6 +6,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
 import { listRestaurants } from '../redux/actions/restaurantActions';
+import Axios from 'axios';
 
 export default function MealEditScreen(props) {
 
@@ -17,6 +18,7 @@ export default function MealEditScreen(props) {
     const [fat, setFat] = useState('');
     const [carbohydrates, setCarbohydrates] = useState('');
     const [servingWeight, setServingWeight] = useState('');
+    const [image, setImage] = useState('');
 
     const mealDetails = useSelector((state) => state.mealDetails);
     const { loading, error, meal } = mealDetails;
@@ -60,9 +62,36 @@ export default function MealEditScreen(props) {
             protein,
             fat,
             carbohydrates,
-            servingWeight
+            servingWeight,
+            image
         })
         );
+    };
+
+    const [loadingUpload, setLoadingUpload] = useState(false);
+    const [errorUpload, setErrorUpload] = useState('');
+
+    const userSignin = useSelector((state) => state.userSignin);
+    const { userInfo } = userSignin;
+
+    const uploadFileHandler = async (e) => {
+        const file = e.target.files[0];
+        const bodyFormData = new FormData();
+        bodyFormData.append('image', file);
+        setLoadingUpload(true);
+        try {
+            const { data } = await Axios.post('/api/uploads', bodyFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${userInfo.token}`,
+                },
+            });
+            setImage(data);
+            setLoadingUpload(false);
+        } catch (error) {
+            setErrorUpload(error.message);
+            setLoadingUpload(false);
+        }
     };
 
     return (
@@ -81,7 +110,7 @@ export default function MealEditScreen(props) {
                 <FormGroup row>
                     <Label for="nameField" sm={1}>Meal name</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="text" name="name" id="nameField" placeholder="Enter meal name" value={name} onChange={(e) => setName(e.target.value)} />
+                        <Input type="text" name="name" id="nameField" placeholder="Enter meal name" value={name} onChange={(e) => setName(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -102,31 +131,39 @@ export default function MealEditScreen(props) {
                 <FormGroup row>
                     <Label for="kcalField" sm={1}>Kcal</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" name="kcal" id="kcalField" placeholder="Enter kcal" value={kcal} onChange={(e) => setKcal(e.target.value)} />
+                        <Input type="number" name="kcal" id="kcalField" placeholder="Enter kcal" value={kcal} onChange={(e) => setKcal(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Label for="proteinField" sm={1}>Protein</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" step="0.1" name="protein" id="proteinField" placeholder="Enter protein amount" value={protein} onChange={(e) => setProtein(e.target.value)} />
+                        <Input type="number" step="0.1" name="protein" id="proteinField" placeholder="Enter protein amount" value={protein} onChange={(e) => setProtein(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Label for="fatField" sm={1}>Fat</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" step="0.1" name="fat" id="fatField" placeholder="Enter fat amount" value={fat} onChange={(e) => setFat(e.target.value)} />
+                        <Input type="number" step="0.1" name="fat" id="fatField" placeholder="Enter fat amount" value={fat} onChange={(e) => setFat(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Label for="carbohydratesField" sm={1}>Carbohydratese</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" step="0.1" name="carbohydrates" id="carbohydratesField" placeholder="Enter carbohydrates amount" value={carbohydrates} onChange={(e) => setCarbohydrates(e.target.value)} />
+                        <Input type="number" step="0.1" name="carbohydrates" id="carbohydratesField" placeholder="Enter carbohydrates amount" value={carbohydrates} onChange={(e) => setCarbohydrates(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Label for="servingWeightField" sm={1}>Serving Weight</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" name="servingWeight" id="servingWeightField" placeholder="Enter serving weight" value={servingWeight} onChange={(e) => setServingWeight(e.target.value)} />
+                        <Input type="number" name="servingWeight" id="servingWeightField" placeholder="Enter serving weight" value={servingWeight} onChange={(e) => setServingWeight(e.target.value)} />
+                    </Col>
+                </FormGroup>
+                <FormGroup row>
+                    <Label for="imageFile" sm={1}>Choose image</Label>
+                    <Col md={{ size: 4 }}>
+                        <Input type="file" name="imageUpload" id="imageField" label="Choose Image" onChange={uploadFileHandler} />
+                        {loadingUpload && <LoadingBox></LoadingBox>}
+                        {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
                     </Col>
                 </FormGroup>
                 <FormGroup check row>

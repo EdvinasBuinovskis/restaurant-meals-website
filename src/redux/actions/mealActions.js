@@ -23,11 +23,11 @@ export const detailsMeal = (mealId) => async (dispatch) => {
     }
 };
 
-export const createMeal = (name, restaurant_id, kcal, protein, fat, carbohydrates, servingWeight, createdBy) => async (dispatch, getState) => {
-    dispatch({ type: MEAL_CREATE_REQUEST, payload: { name, restaurant_id, kcal, protein, fat, carbohydrates, servingWeight, createdBy } });
+export const createMeal = (name, restaurant_id, kcal, protein, fat, carbohydrates, servingWeight, createdBy, image) => async (dispatch, getState) => {
+    dispatch({ type: MEAL_CREATE_REQUEST, payload: { name, restaurant_id, kcal, protein, fat, carbohydrates, servingWeight, createdBy, image } });
     const { userSignin: { userInfo } } = getState();
     try {
-        const { data } = await Axios.post('/api/meals', { name, restaurant_id, kcal, protein, fat, carbohydrates, servingWeight, createdBy }, {
+        const { data } = await Axios.post('/api/meals', { name, restaurant_id, kcal, protein, fat, carbohydrates, servingWeight, createdBy, image }, {
             headers: { Authorization: `Bearer ${userInfo.token}` }
         });
         dispatch({ type: MEAL_CREATE_SUCCESS, payload: data });

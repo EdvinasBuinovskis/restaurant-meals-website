@@ -6,11 +6,15 @@ import MessageBox from '../components/MessageBox';
 import Restaurant from '../components/Restaurant';
 import { listRestaurants } from '../redux/actions/restaurantActions';
 import Search from '../components/Search';
+import { Button } from 'reactstrap';
 
 export default function RestaurantListScreen() {
     const dispatch = useDispatch();
     const restaurantList = useSelector(state => state.restaurantList);
     const { loading, error, restaurants } = restaurantList;
+
+    const userSignin = useSelector((state) => state.userSignin);
+    const { userInfo } = userSignin;
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -36,6 +40,19 @@ export default function RestaurantListScreen() {
                     (
                         <div>
                             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                            {
+                                userInfo ? (
+                                    <div>
+                                        {userInfo.isAdmin ? (
+                                            <Button href="/restaurants/add">Add</Button>
+                                        ) : (
+                                            <div></div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div></div>
+                                )
+                            }
                             <div className="row center">
                                 {filterRestaurants().map(restaurant => (
                                     <Restaurant key={restaurant._id} restaurant={restaurant}></Restaurant>

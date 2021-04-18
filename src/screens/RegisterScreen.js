@@ -83,8 +83,8 @@ export default function RegisterScreen(props) {
                 </FormGroup>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Input plaintext value="Have account?" />
-                        <Link to="/login">Log in</Link>
+                        <Label>Have account?</Label>
+                        <Link to="/login"> Log in</Link>
                     </Col>
                 </FormGroup>
             </Form>
