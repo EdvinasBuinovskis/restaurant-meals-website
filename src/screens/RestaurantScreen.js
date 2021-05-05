@@ -55,7 +55,6 @@ export default function RestaurantScreen(props) {
                     (
                         <div>
                             <div>
-                                <Link to="/restaurants">Go back</Link>
                                 {
                                     userInfo ? (
                                         <div>
@@ -74,7 +73,7 @@ export default function RestaurantScreen(props) {
                                 }
                                 <Jumbotron fluid>
                                     <Container fluid>
-                                        <img top src={restaurant.image} alt="failed to load photo :/"></img>
+                                        <img top src={restaurant.image} alt="failed to load photo :/" style={{ maxWidth: '22rem', maxHeight: '22rem' }}></img>
                                         <h1 className="display-3">{restaurant.name}</h1>
                                         <p className="lead">{restaurant.description}</p>
                                     </Container>

@@ -74,25 +74,25 @@ export default function MealCreateScreen(props) {
             <Form onSubmit={createHandler}>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Label>Add a meal</Label>
+                        <Label>Pridėti naują patiekalą</Label>
                     </Col>
                 </FormGroup>
                 {loading && <LoadingBox></LoadingBox>}
                 {error && <MessageBox variant="danger">{error}</MessageBox>}
                 <FormGroup row>
-                    <Label for="nameField" sm={1}>Meal name</Label>
+                    <Label for="nameField" sm={1}>Patiekalo pavadinimas</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="text" name="name" id="nameField" placeholder="Enter meal name" onChange={(e) => setName(e.target.value)} />
+                        <Input required type="text" name="name" id="nameField" placeholder="Įveskite patiekalo pavadinimą" onChange={(e) => setName(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="restaurantSelect" sm={1}>Restaurant</Label>
+                    <Label for="restaurantSelect" sm={1}>Restoranas</Label>
                     <Col md={{ size: 4 }}>
                         {loadingList ? (<LoadingBox></LoadingBox>) :
                             errorList ? (<MessageBox variant="danger">{error}</MessageBox>) :
                                 (
                                     <Input type="select" name="select" id="restaurantSelect" onClick={(e) => setRestaurantId(e.target.value)}>
-                                        <option>-Select restaurant-</option>
+                                        <option>-Pasirinkite restoraną-</option>
                                         {restaurants.map(restaurant => (
                                             <option key={restaurant._id} value={restaurant._id}>{restaurant.name}</option>
                                         ))}
@@ -101,46 +101,47 @@ export default function MealCreateScreen(props) {
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="kcalField" sm={1}>Kcal</Label>
+                    <Label for="kcalField" sm={1}>Kalorijos</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" name="kcal" id="kcalField" placeholder="Enter kcal" onChange={(e) => setKcal(e.target.value)} />
+                        <Input required type="number" name="kcal" id="kcalField" placeholder="Įveskite kalorijas" onChange={(e) => setKcal(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="proteinField" sm={1}>Protein</Label>
+                    <Label for="proteinField" sm={1}>Baltymai</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" step="0.1" name="protein" id="proteinField" placeholder="Enter protein amount" onChange={(e) => setProtein(e.target.value)} />
+                        <Input required type="number" step="0.1" name="protein" id="proteinField" placeholder="Įveskite baltymų kiekį" onChange={(e) => setProtein(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="fatField" sm={1}>Fat</Label>
+                    <Label for="fatField" sm={1}>Riebalai</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" step="0.1" name="fat" id="fatField" placeholder="Enter fat amount" onChange={(e) => setFat(e.target.value)} />
+                        <Input required type="number" step="0.1" name="fat" id="fatField" placeholder="Įveskite riebalų kiekį" onChange={(e) => setFat(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="carbohydratesField" sm={1}>Carbohydratese</Label>
+                    <Label for="carbohydratesField" sm={1}>Angliavandeniai</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" step="0.1" name="carbohydrates" id="carbohydratesField" placeholder="Enter carbohydrates amount" onChange={(e) => setCarbohydrates(e.target.value)} />
+                        <Input required type="number" step="0.1" name="carbohydrates" id="carbohydratesField" placeholder="Įveskite angliavandenių kiekį" onChange={(e) => setCarbohydrates(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="servingWeightField" sm={1}>Serving Weight</Label>
+                    <Label for="servingWeightField" sm={1}>Porcijos svoris</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="number" name="servingWeight" id="servingWeightField" placeholder="Enter serving weight" onChange={(e) => setServingWeight(e.target.value)} />
+                        <Input required type="number" name="servingWeight" id="servingWeightField" placeholder="Įveskite procijos svorį" onChange={(e) => setServingWeight(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="imageFile" sm={1}>Choose image</Label>
+                    <Label for="imageFile" sm={1}>Paveikslėlis</Label>
                     <Col md={{ size: 4 }}>
                         <Input required type="file" name="imageUpload" id="imageField" label="Choose Image" onChange={uploadFileHandler} />
+                        <img src={image} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
                         {loadingUpload && <LoadingBox></LoadingBox>}
                         {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
                     </Col>
                 </FormGroup>
                 <FormGroup check row>
                     <Col sm={{ size: 10, offset: 1 }}>
-                        <Button type="submit">Add</Button>
+                        <Button type="submit">Pridėti</Button>
                     </Col>
                 </FormGroup>
             </Form>

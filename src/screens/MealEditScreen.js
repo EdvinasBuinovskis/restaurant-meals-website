@@ -49,6 +49,7 @@ export default function MealEditScreen(props) {
             setFat(meal.fat);
             setCarbohydrates(meal.carbohydrates);
             setServingWeight(meal.servingWeight);
+            setImage(meal.image);
         }
     }, [meal, dispatch, mealId, successUpdate, props.history]);
 
@@ -100,7 +101,7 @@ export default function MealEditScreen(props) {
             <Form onSubmit={submitHandler}>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Label>Edit a meal</Label>
+                        <Label>Redaguoti patiekalą</Label>
                     </Col>
                 </FormGroup>
                 {loadingUpdate && <LoadingBox></LoadingBox>}
@@ -108,19 +109,19 @@ export default function MealEditScreen(props) {
                 {loading && <LoadingBox></LoadingBox>}
                 {error && <MessageBox variant="danger">{error}</MessageBox>}
                 <FormGroup row>
-                    <Label for="nameField" sm={1}>Meal name</Label>
+                    <Label for="nameField" sm={1}>Patiekalo pavadinimas</Label>
                     <Col md={{ size: 4 }}>
-                        <Input type="text" name="name" id="nameField" placeholder="Enter meal name" value={name} onChange={(e) => setName(e.target.value)} />
+                        <Input type="text" name="name" id="nameField" placeholder="Įveskite patiekalo pavadinimą" value={name} onChange={(e) => setName(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="restaurantSelect" sm={1}>Restaurant</Label>
+                    <Label for="restaurantSelect" sm={1}>Restoranas</Label>
                     <Col md={{ size: 4 }}>
                         {loadingList ? (<LoadingBox></LoadingBox>) :
                             errorList ? (<MessageBox variant="danger">{error}</MessageBox>) :
                                 (
                                     <Input type="select" name="select" id="restaurantSelect" value={restaurant_id} onClick={(e) => setRestaurantId(e.target.value)}>
-                                        <option>-Select restaurant-</option>
+                                        <option>-Pasirinkite restoraną-</option>
                                         {restaurants.map(restaurant => (
                                             <option key={restaurant._id} value={restaurant._id}>{restaurant.name}</option>
                                         ))}
@@ -129,46 +130,47 @@ export default function MealEditScreen(props) {
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="kcalField" sm={1}>Kcal</Label>
+                    <Label for="kcalField" sm={1}>Kalorijos</Label>
                     <Col md={{ size: 4 }}>
-                        <Input type="number" name="kcal" id="kcalField" placeholder="Enter kcal" value={kcal} onChange={(e) => setKcal(e.target.value)} />
+                        <Input type="number" name="kcal" id="kcalField" placeholder="Įveskite kalorijas" value={kcal} onChange={(e) => setKcal(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="proteinField" sm={1}>Protein</Label>
+                    <Label for="proteinField" sm={1}>Baltymai</Label>
                     <Col md={{ size: 4 }}>
-                        <Input type="number" step="0.1" name="protein" id="proteinField" placeholder="Enter protein amount" value={protein} onChange={(e) => setProtein(e.target.value)} />
+                        <Input type="number" step="0.1" name="protein" id="proteinField" placeholder="Įveskite baltymų kiekį" value={protein} onChange={(e) => setProtein(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="fatField" sm={1}>Fat</Label>
+                    <Label for="fatField" sm={1}>Riebalai</Label>
                     <Col md={{ size: 4 }}>
-                        <Input type="number" step="0.1" name="fat" id="fatField" placeholder="Enter fat amount" value={fat} onChange={(e) => setFat(e.target.value)} />
+                        <Input type="number" step="0.1" name="fat" id="fatField" placeholder="Įveskite riebalų kiekį" value={fat} onChange={(e) => setFat(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="carbohydratesField" sm={1}>Carbohydratese</Label>
+                    <Label for="carbohydratesField" sm={1}>Angliavandeniai</Label>
                     <Col md={{ size: 4 }}>
-                        <Input type="number" step="0.1" name="carbohydrates" id="carbohydratesField" placeholder="Enter carbohydrates amount" value={carbohydrates} onChange={(e) => setCarbohydrates(e.target.value)} />
+                        <Input type="number" step="0.1" name="carbohydrates" id="carbohydratesField" placeholder="Įveskite angliavandenių kiekį" value={carbohydrates} onChange={(e) => setCarbohydrates(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="servingWeightField" sm={1}>Serving Weight</Label>
+                    <Label for="servingWeightField" sm={1}>Porcijos svoris</Label>
                     <Col md={{ size: 4 }}>
-                        <Input type="number" name="servingWeight" id="servingWeightField" placeholder="Enter serving weight" value={servingWeight} onChange={(e) => setServingWeight(e.target.value)} />
+                        <Input type="number" name="servingWeight" id="servingWeightField" placeholder="Įveskite procijos svorį" value={servingWeight} onChange={(e) => setServingWeight(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="imageFile" sm={1}>Choose image</Label>
+                    <Label for="imageFile" sm={1}>Paveikslėlis</Label>
                     <Col md={{ size: 4 }}>
                         <Input type="file" name="imageUpload" id="imageField" label="Choose Image" onChange={uploadFileHandler} />
+                        <img src={image} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
                         {loadingUpload && <LoadingBox></LoadingBox>}
                         {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
                     </Col>
                 </FormGroup>
                 <FormGroup check row>
                     <Col sm={{ size: 10, offset: 1 }}>
-                        <Button type="submit">Update</Button>
+                        <Button type="submit">Atnaujinti</Button>
                     </Col>
                 </FormGroup>
             </Form>

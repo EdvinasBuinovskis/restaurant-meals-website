@@ -22,7 +22,8 @@ export default function RestaurantListScreen() {
 
         return meals.filter((meal) => {
             const mealName = meal.name.toLowerCase();
-            return mealName.includes(searchTerm);
+            const termToLow = searchTerm.toLowerCase();
+            return mealName.includes(termToLow);
         });
     };
 

@@ -68,34 +68,35 @@ export default function RestaurantCreateScreen(props) {
             <Form onSubmit={createHandler}>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Label>Add a restaurant</Label>
+                        <Label>Pridėti naują restoraną</Label>
                     </Col>
                 </FormGroup>
                 {loading && <LoadingBox></LoadingBox>}
                 {error && <MessageBox variant="danger">{error}</MessageBox>}
                 <FormGroup row>
-                    <Label for="nameField" sm={1}>Restaurant name</Label>
+                    <Label for="nameField" sm={1}>Restorano pavadinimas</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="text" name="name" id="nameField" placeholder="Enter meal name" onChange={(e) => setName(e.target.value)} />
+                        <Input required type="text" name="name" id="nameField" placeholder="Įveskite restorano pavadinimą" onChange={(e) => setName(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="imageFile" sm={1}>Choose image</Label>
+                    <Label for="imageFile" sm={1}>Paveikslėlis</Label>
                     <Col md={{ size: 4 }}>
                         <Input required type="file" name="imageUpload" id="imageField" label="Choose Image" onChange={uploadFileHandler} />
+                        <img src={image} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
                         {loadingUpload && <LoadingBox></LoadingBox>}
                         {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="descriptionField" sm={1}>Description</Label>
+                    <Label for="descriptionField" sm={1}>Aprašymas</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="textarea" name="description" id="descriptionField" placeholder="Enter description" onChange={(e) => setDescription(e.target.value)} />
+                        <Input required type="textarea" name="description" id="descriptionField" placeholder="Įveskite aprašymą" onChange={(e) => setDescription(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup check row>
                     <Col sm={{ size: 10, offset: 1 }}>
-                        <Button type="submit">Add</Button>
+                        <Button type="submit">Pridėti</Button>
                     </Col>
                 </FormGroup>
             </Form>

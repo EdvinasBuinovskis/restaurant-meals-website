@@ -7,6 +7,7 @@ import Restaurant from '../components/Restaurant';
 import { listRestaurants } from '../redux/actions/restaurantActions';
 import Search from '../components/Search';
 import { Button } from 'reactstrap';
+import { MDBRow, MDBCol, MDBCardGroup } from 'mdb-react-ui-kit';
 
 export default function RestaurantListScreen() {
     const dispatch = useDispatch();
@@ -25,7 +26,8 @@ export default function RestaurantListScreen() {
 
         return restaurants.filter((restaurant) => {
             const restaurantName = restaurant.name.toLowerCase();
-            return restaurantName.includes(searchTerm);
+            const termToLow = searchTerm.toLowerCase();
+            return restaurantName.includes(termToLow);
         });
     };
 
@@ -53,11 +55,13 @@ export default function RestaurantListScreen() {
                                     <div></div>
                                 )
                             }
-                            <div className="row center">
-                                {filterRestaurants().map(restaurant => (
-                                    <Restaurant key={restaurant._id} restaurant={restaurant}></Restaurant>
-                                ))}
-                            </div>
+                            <MDBCardGroup>
+                                <div className="row center">
+                                    {filterRestaurants().map(restaurant => (
+                                        <Restaurant key={restaurant._id} restaurant={restaurant}></Restaurant>
+                                    ))}
+                                </div>
+                            </MDBCardGroup>
                         </div>
                     )}
         </div>

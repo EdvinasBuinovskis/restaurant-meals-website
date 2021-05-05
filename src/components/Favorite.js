@@ -43,8 +43,8 @@ export default function Favorite(props) {
             {loading ? (<LoadingBox></LoadingBox>) :
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     (
-                        isFavorite ? (<Button onClick={() => removeFavorite()}>Remove</Button>) :
-                            (<Button onClick={() => addFavorite()}>Add</Button>)
+                        isFavorite ? (<Button onClick={() => removeFavorite()}>Pašalinti iš įsimintų</Button>) :
+                            (<Button onClick={() => addFavorite()}>Pridėti prie įsimintų</Button>)
                     )}
         </div>
     )

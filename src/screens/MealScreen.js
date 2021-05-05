@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { detailsMeal, deleteMeal } from '../redux/actions/mealActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Row } from 'reactstrap';
+// import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Row } from 'reactstrap';
+import { Button } from 'reactstrap';
 import Activity from '../components/Activity';
 import Favorite from '../components/Favorite';
+import { MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCol, MDBListGroup, MDBListGroupItem, MDBRow } from 'mdb-react-ui-kit';
 
 
 export default function MealScreen(props) {
@@ -30,7 +32,7 @@ export default function MealScreen(props) {
     }, [dispatch, mealId, successDelete]);
 
     const deleteHandler = () => {
-        if (window.confirm('Are you sure you want to delete?')) {
+        if (window.confirm('Ar tikrai norite pašalinti patiekalą?')) {
             dispatch(deleteMeal(mealId));
         }
     };
@@ -41,18 +43,24 @@ export default function MealScreen(props) {
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     (
                         <div>
-                            <Favorite mealId={mealId} />
                             {
-                                userInfo._id === meal.createdBy ? (
+                                userInfo ? (
                                     <div>
-                                        <Button href={`/mymeals/${meal._id}/edit`} >Edit</Button>
-                                        <Button onClick={() => deleteHandler()}>Delete</Button>
+                                        <Favorite mealId={mealId} />
+                                        {userInfo._id === meal.createdBy ? (
+                                            <div>
+                                                <Button href={`/mymeals/${meal._id}/edit`} >Redaguoti</Button>
+                                                <Button onClick={() => deleteHandler()}>Pašalinti</Button>
+                                            </div>
+                                        ) : (
+                                            <div></div>
+                                        )}
                                     </div>
                                 ) : (
                                     <div></div>
                                 )
                             }
-                            <Row>
+                            {/* <Row>
                                 <Col md={{ size: 4, offset: 1 }}>
                                     <Card>
                                         <CardImg top width="100%" src={meal.image} alt="failed to load photo :/" />
@@ -68,9 +76,29 @@ export default function MealScreen(props) {
                                 <Col md={{ size: 4, offset: 1 }}>
                                     <Activity kcal={meal.kcal} />
                                 </Col>
-                            </Row>
+                            </Row> */}
+                            <MDBRow center className='row-cols-1 row-cols-md-3 g-4'>
+                                <MDBCol>
+                                    <MDBCard style={{ width: '30rem' }}>
+                                        <MDBCardImage position='top' src={meal.image} alt="failed to load photo :/" style={{ maxWidth: '30rem', maxHeight: '30rem' }} />
+                                        <MDBCardBody>
+                                            <MDBCardTitle>{meal.name}</MDBCardTitle>
+                                        </MDBCardBody>
+                                        <MDBListGroup flush>
+                                            <MDBListGroupItem>Kalorijos:  {meal.kcal}</MDBListGroupItem>
+                                            <MDBListGroupItem>Baltymai: {meal.protein}</MDBListGroupItem>
+                                            <MDBListGroupItem>Riebalai: {meal.fat}</MDBListGroupItem>
+                                            <MDBListGroupItem>Angliavandeniai: {meal.carbohydrates}</MDBListGroupItem>
+                                        </MDBListGroup>
+                                    </MDBCard>
+                                </MDBCol>
+                                <MDBCol>
+                                    <Activity kcal={meal.kcal} />
+                                </MDBCol>
+                            </MDBRow>
                         </div>
                     )}
         </div>
     );
 }
+

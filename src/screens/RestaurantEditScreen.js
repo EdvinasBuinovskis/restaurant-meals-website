@@ -78,7 +78,7 @@ export default function RestaurantEditScreen(props) {
             <Form onSubmit={submitHandler}>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Label>Edit a restaurant</Label>
+                        <Label>Redaguoti restoraną</Label>
                     </Col>
                 </FormGroup>
                 {loadingUpdate && <LoadingBox></LoadingBox>}
@@ -86,29 +86,29 @@ export default function RestaurantEditScreen(props) {
                 {loading && <LoadingBox></LoadingBox>}
                 {error && <MessageBox variant="danger">{error}</MessageBox>}
                 <FormGroup row>
-                    <Label for="nameField" sm={1}>Restaurant name</Label>
+                    <Label for="nameField" sm={1}>Restorano pavadinimas</Label>
                     <Col md={{ size: 4 }}>
-                        <Input type="text" name="name" id="nameField" placeholder="Enter meal name" value={name} onChange={(e) => setName(e.target.value)} />
+                        <Input type="text" name="name" id="nameField" placeholder="Įveskite restorano pavadinimą" value={name} onChange={(e) => setName(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="imageFile" sm={1}>Choose image</Label>
+                    <Label for="imageFile" sm={1}>Paveikslėlis</Label>
                     <Col md={{ size: 4 }}>
                         <Input type="file" name="imageUpload" id="imageField" label="Choose Image" onChange={uploadFileHandler} />
-                        <img src={image} />
+                        <img src={image} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
                         {loadingUpload && <LoadingBox></LoadingBox>}
                         {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="descriptionField" sm={1}>Description</Label>
+                    <Label for="descriptionField" sm={1}>Aprašymas</Label>
                     <Col md={{ size: 4 }}>
-                        <Input type="textarea" name="description" id="descriptionField" placeholder="Enter description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                        <Input type="textarea" name="description" id="descriptionField" placeholder="Įveskite aprašymą" value={description} onChange={(e) => setDescription(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup check row>
                     <Col sm={{ size: 10, offset: 1 }}>
-                        <Button type="submit">Update</Button>
+                        <Button type="submit">Atnaujinti</Button>
                     </Col>
                 </FormGroup>
             </Form>

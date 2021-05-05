@@ -84,7 +84,7 @@ export default function RegisterScreen(props) {
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
                         <Label>Have account?</Label>
-                        <Link to="/login"> Log in</Link>
+                        <Link to="/signin"> Log in</Link>
                     </Col>
                 </FormGroup>
             </Form>
