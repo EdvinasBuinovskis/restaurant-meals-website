@@ -8,6 +8,7 @@ import MessageBox from '../components/MessageBox';
 import { Button } from 'reactstrap';
 import Activity from '../components/Activity';
 import Favorite from '../components/Favorite';
+import Approve from '../components/Approve';
 import { MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCol, MDBListGroup, MDBListGroupItem, MDBRow } from 'mdb-react-ui-kit';
 
 
@@ -43,6 +44,21 @@ export default function MealScreen(props) {
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     (
                         <div>
+                            {
+                                userInfo ? (
+                                    <div>
+                                        {userInfo.isAdmin ? (
+                                            <div>
+                                                <Approve mealId={mealId} isApproved={meal.approved} />
+                                            </div>
+                                        ) : (
+                                            <div></div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div></div>
+                                )
+                            }
                             {
                                 userInfo ? (
                                     <div>
