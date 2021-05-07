@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
@@ -73,7 +74,8 @@ export default function RestaurantScreen(props) {
                                 }
                                 <Jumbotron fluid>
                                     <Container fluid>
-                                        <img top src={restaurant.image} alt="failed to load photo :/" style={{ maxWidth: '22rem', maxHeight: '22rem' }}></img>
+                                        <img top src={`${process.env.REACT_APP_IMG}${restaurant.image}`} alt="failed to load photo :/" style={{ maxWidth: '22rem', maxHeight: '22rem' }}></img>
+                                        {/* <img top src={restaurant.image} alt="failed to load photo :/" style={{ maxWidth: '22rem', maxHeight: '22rem' }}></img> */}
                                         <h1 className="display-3">{restaurant.name}</h1>
                                         <p className="lead">{restaurant.description}</p>
                                     </Container>

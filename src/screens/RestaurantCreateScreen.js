@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
@@ -83,7 +84,7 @@ export default function RestaurantCreateScreen(props) {
                     <Label for="imageFile" sm={1}>Paveikslėlis</Label>
                     <Col md={{ size: 4 }}>
                         <Input required type="file" name="imageUpload" id="imageField" label="Choose Image" onChange={uploadFileHandler} />
-                        <img src={image} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
+                        <img src={`${process.env.REACT_APP_IMG}${image}`} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
                         {loadingUpload && <LoadingBox></LoadingBox>}
                         {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
                     </Col>

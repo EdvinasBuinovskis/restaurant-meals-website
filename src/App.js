@@ -27,7 +27,11 @@ import AdminRoute from './components/AdminRoute';
 
 import HeaderMDB from './components/HeaderMDB';
 
+import Axios from 'axios';
+
 function App() {
+  // eslint-disable-next-line no-undef
+  process.env.NODE_ENV === 'development' ? Axios.defaults.baseURL = process.env.REACT_APP_DEV_API : Axios.defaults.baseURL = process.env.REACT_APP_PROD_API
   return (
     <div className="App">
       {/* <Header /> */}

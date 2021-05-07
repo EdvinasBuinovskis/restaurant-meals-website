@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingBox from '../components/LoadingBox';
@@ -7,7 +6,7 @@ import Restaurant from '../components/Restaurant';
 import { listRestaurants } from '../redux/actions/restaurantActions';
 import Search from '../components/Search';
 import { Button } from 'reactstrap';
-import { MDBRow, MDBCol, MDBCardGroup } from 'mdb-react-ui-kit';
+import { MDBCardGroup } from 'mdb-react-ui-kit';
 
 export default function RestaurantListScreen() {
     const dispatch = useDispatch();

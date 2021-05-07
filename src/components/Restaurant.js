@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 // import React from 'react'
 // import { Link } from 'react-router-dom';
@@ -31,7 +32,7 @@ export default function Restaurant(props) {
             <Link to={`/restaurants/${restaurant._id}`}>
                 <MDBCard style={{ maxWidth: '22rem' }} className='h-100'>
                     <MDBRipple rippleColor='light' rippleTag='div' className='bg-image hover-overlay'>
-                        <MDBCardImage src={restaurant.image} fluid alt="Failed to load image :/" position="top" />
+                        <MDBCardImage src={`${process.env.REACT_APP_IMG}${restaurant.image}`} fluid alt="Failed to load image :/" position="top" />
                         <a>
                             <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
                         </a>

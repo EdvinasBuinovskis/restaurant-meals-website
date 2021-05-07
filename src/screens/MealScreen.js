@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -96,7 +97,7 @@ export default function MealScreen(props) {
                             <MDBRow center className='row-cols-1 row-cols-md-3 g-4'>
                                 <MDBCol>
                                     <MDBCard style={{ width: '30rem' }}>
-                                        <MDBCardImage position='top' src={meal.image} alt="failed to load photo :/" style={{ maxWidth: '30rem', maxHeight: '30rem' }} />
+                                        <MDBCardImage position='top' src={`${process.env.REACT_APP_IMG}${meal.image}`} alt="failed to load photo :/" style={{ maxWidth: '30rem', maxHeight: '30rem' }} />
                                         <MDBCardBody>
                                             <MDBCardTitle>{meal.name}</MDBCardTitle>
                                         </MDBCardBody>
