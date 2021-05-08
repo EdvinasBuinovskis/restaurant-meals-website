@@ -24,7 +24,7 @@ export default function RegisterScreen(props) {
     const submitHandler = (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            alert('Password and confirm password do not match');
+            alert('Slaptažodis ir patvirtinimo slaptažodis nesutampa');
         } else {
             dispatch(register(username, email, password));
         }
@@ -47,44 +47,44 @@ export default function RegisterScreen(props) {
             <Form onSubmit={submitHandler}>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Label>Register</Label>
+                        <Label>Registracija</Label>
                     </Col>
                 </FormGroup>
                 {loading && <LoadingBox></LoadingBox>}
                 {error && <MessageBox variant="danger">{error}</MessageBox>}
                 <FormGroup row>
-                    <Label for="usernameField" sm={1}>Username</Label>
+                    <Label for="usernameField" sm={1}>Naudotojo vardas</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="text" name="username" id="usernameField" placeholder="Enter your username" onChange={(e) => setUsername(e.target.value)} />
+                        <Input required type="text" name="username" id="usernameField" placeholder="Įveskite naudotojo vardą" onChange={(e) => setUsername(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="emailField" sm={1}>Email</Label>
+                    <Label for="emailField" sm={1}>El. paštas</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="text" name="email" id="emailField" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} />
+                        <Input required type="text" name="email" id="emailField" placeholder="Įveskite el. paštą" onChange={(e) => setEmail(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="passwordField" sm={1}>Password</Label>
+                    <Label for="passwordField" sm={1}>Slaptažodis</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="password" name="password" id="passwordField" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} />
+                        <Input required type="password" name="password" id="passwordField" placeholder="Įveskite slaptažodį" onChange={(e) => setPassword(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="confirmPasswordField" sm={1}>Confirm Password</Label>
+                    <Label for="confirmPasswordField" sm={1}>Patvirtinti slaptažodį</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="password" name="password" id="confirmPasswordField" placeholder="Enter your password" onChange={(e) => setConfirmPassword(e.target.value)} />
+                        <Input required type="password" name="password" id="confirmPasswordField" placeholder="Įveskite slaptažodį" onChange={(e) => setConfirmPassword(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup check row>
                     <Col sm={{ size: 10, offset: 1 }}>
-                        <Button type="submit">Register</Button>
+                        <Button type="submit">Registruotis</Button>
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Label>Have account?</Label>
-                        <Link to="/signin"> Log in</Link>
+                        <Label>Turite paskyrą?</Label>
+                        <Link to="/signin"> Prisijungti</Link>
                     </Col>
                 </FormGroup>
             </Form>

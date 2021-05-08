@@ -61,8 +61,8 @@ export default function RestaurantScreen(props) {
                                         <div>
                                             {userInfo.isAdmin ? (
                                                 <div>
-                                                    <Button href={`/restaurants/${restaurant._id}/edit`} >Edit</Button>
-                                                    <Button onClick={() => deleteHandler()}>Delete</Button>
+                                                    <Button href={`/restaurants/${restaurant._id}/edit`} >Redaguoti</Button>
+                                                    <Button onClick={() => deleteHandler()}>Pašalinti</Button>
                                                 </div>
                                             ) : (
                                                 <div></div>

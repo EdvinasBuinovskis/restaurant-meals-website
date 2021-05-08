@@ -45,7 +45,7 @@ export default function UserMealScreen() {
                     (
                         <div>
                             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-                            <Button href="/mymeals/add">Add meal</Button>
+                            <Button href="/mymeals/add">Pridėti patiekalą</Button>
                             <div>
                                 <ListGroup>
                                     {filterMeals().map(meal => (

@@ -16,7 +16,7 @@ export default function Activity({ kcal }) {
             met: 7.5
         },
         {
-            activityName: "Begiodami",
+            activityName: "Bėgiodami",
             met: 7
         },
         {
@@ -69,7 +69,7 @@ export default function Activity({ kcal }) {
                         <DropdownMenu onClick={(e) => setActivity(e.target.value)}>
                             {/* <DropdownMenu onClick={handleClick}> */}
                             <DropdownItem value="Važinėdami dviračiu">Važinėdami dviračiu</DropdownItem>
-                            <DropdownItem value="Begiodami">Begiodami</DropdownItem>
+                            <DropdownItem value="Bėgiodami">Bėgiodami</DropdownItem>
                             <DropdownItem value="Vaikščiodami">Vaikščiodami</DropdownItem>
                             <DropdownItem value="Plaukdami">Plaukdami</DropdownItem>
                         </DropdownMenu>

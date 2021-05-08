@@ -33,41 +33,40 @@ export default function App() {
                     </MDBNavbarBrand>
                     <NavbarToggler onClick={toggle} />
                     <Collapse isOpen={isOpen} navbar>
+
                         <MDBNavbarNav right className='mb-2 mb-lg-0'>
                             <MDBNavbarItem active>
                                 <MDBNavbarLink aria-current='page' href='/restaurants'>
                                     Restoranai
-                                </MDBNavbarLink>
+                            </MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
                                 <MDBNavbarLink href='/meals'>Patiekalai</MDBNavbarLink>
                             </MDBNavbarItem>
-                            <MDBNavbarItem>
-                                {
-                                    userInfo ? (
-                                        <div>
-                                            <MDBNavbarItem>
-                                                <MDBNavbarLink href="/favorites">Įsiminti</MDBNavbarLink>
-                                            </MDBNavbarItem>
-                                            <MDBNavbarItem>
-                                                <MDBNavbarLink href="/mymeals">Mano patiekalai</MDBNavbarLink>
-                                            </MDBNavbarItem>
-                                            <MDBNavbarItem>
-                                                <h1>{userInfo.name}</h1>
-                                            </MDBNavbarItem>
-                                            <MDBNavbarLink aria-current='page' href='#signout' onClick={signoutHandler}>
-                                                <MDBIcon className='ms-1' icon='sign-out-alt' size='lg' />
-                                            </MDBNavbarLink>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <MDBNavbarLink className="ml-auto p-2 col-example" aria-current='page' href='/signin'>
-                                                <MDBIcon className='ms-1' icon='sign-in-alt' size='lg' />
-                                            </MDBNavbarLink>
-                                        </div>
-                                    )
-                                }
-                            </MDBNavbarItem>
+                            {
+                                userInfo ? (
+                                    <>
+                                        <MDBNavbarItem>
+                                            <MDBNavbarLink href="/favorites">Įsiminti</MDBNavbarLink>
+                                        </MDBNavbarItem>
+                                        <MDBNavbarItem>
+                                            <MDBNavbarLink href="/mymeals">Mano patiekalai</MDBNavbarLink>
+                                        </MDBNavbarItem>
+
+                                        <span className='navbar-text ml-auto p-2' >{userInfo.username}</span>
+
+                                        <MDBNavbarLink aria-current='page' href='#signout' onClick={signoutHandler}>
+                                            <MDBIcon className='ms-1' icon='sign-out-alt' size='lg' />
+                                        </MDBNavbarLink>
+                                    </>
+                                ) : (
+                                    <>
+                                        <MDBNavbarLink className="ml-auto p-2" aria-current='page' href='/signin'>
+                                            <MDBIcon className='ms-1' icon='sign-in-alt' size='lg' />
+                                        </MDBNavbarLink>
+                                    </>
+                                )
+                            }
                         </MDBNavbarNav>
                     </Collapse>
                 </MDBContainer>

@@ -37,32 +37,32 @@ export default function LoginScreen(props) {
             <Form onSubmit={submitHandler}>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Label>Log in</Label>
+                        <Label>Prisijungimas</Label>
                     </Col>
                 </FormGroup>
                 {loading && <LoadingBox></LoadingBox>}
                 {error && <MessageBox variant="danger">{error}</MessageBox>}
                 <FormGroup row>
-                    <Label for="usernameField" sm={1}>Username</Label>
+                    <Label for="usernameField" sm={1}>Naudotojo vardas</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="text" name="username" id="usernameField" placeholder="Enter your username" onChange={(e) => setUsername(e.target.value)} />
+                        <Input required type="text" name="username" id="usernameField" placeholder="Įveskite naudotojo vardą" onChange={(e) => setUsername(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="passwordField" sm={1}>Password</Label>
+                    <Label for="passwordField" sm={1}>Slaptažodis</Label>
                     <Col md={{ size: 4 }}>
-                        <Input required type="password" name="password" id="passwordField" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} />
+                        <Input required type="password" name="password" id="passwordField" placeholder="Įveskite slaptažodį" onChange={(e) => setPassword(e.target.value)} />
                     </Col>
                 </FormGroup>
                 <FormGroup check row>
                     <Col sm={{ size: 10, offset: 1 }}>
-                        <Button type="submit">Log in</Button>
+                        <Button type="submit">Prisijungti</Button>
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Col md={{ size: 4, offset: 1 }}>
-                        <Input plaintext value="New user?" />
-                        <Link to="/register">Register</Link>
+                        <Input plaintext value="Naujas naudotojas?" />
+                        <Link to="/register">Registruotis</Link>
                     </Col>
                 </FormGroup>
             </Form>

@@ -45,7 +45,7 @@ export default function RestaurantListScreen() {
                                 userInfo ? (
                                     <div>
                                         {userInfo.isAdmin ? (
-                                            <Button href="/restaurants/add">Add</Button>
+                                            <Button href="/restaurants/add">Pridėti</Button>
                                         ) : (
                                             <div></div>
                                         )}
