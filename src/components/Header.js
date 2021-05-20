@@ -17,7 +17,7 @@ const Header = () => {
     }
 
     return (
-        <div>
+        <>
             <Navbar color="light" light expand="md">
                 <NavbarBrand href="/"><FontAwesomeIcon icon={faUtensils} /></NavbarBrand>
                 <NavbarToggler onClick={toggle} />
@@ -31,7 +31,7 @@ const Header = () => {
                         </NavItem>
                         {
                             userInfo ? (
-                                <div>
+                                <>
                                     <NavItem>
                                         <NavLink href="/favorites">Favorites</NavLink>
                                     </NavItem>
@@ -40,17 +40,15 @@ const Header = () => {
                                     </NavItem>
                                     <NavbarText >{userInfo.name}</NavbarText>
                                     <Button href="#signout" onClick={signoutHandler}>Log out</Button>
-                                </div>
+                                </>
                             ) : (
-                                <div>
-                                    <Button href="/signin">Log in</Button>
-                                </div>
+                                <Button href="/signin">Log in</Button>
                             )
                         }
                     </Nav>
                 </Collapse>
             </Navbar>
-        </div>
+        </>
     );
 }
 

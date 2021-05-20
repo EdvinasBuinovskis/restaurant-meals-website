@@ -32,22 +32,19 @@ export default function RestaurantListScreen() {
     }, [dispatch]);
 
     return (
-        <div>
+        <>
             {loading ? (<LoadingBox></LoadingBox>) :
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     (
-                        <div>
+                        <>
                             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
-                            <div>
-                                <ListGroup>
-                                    {filterMeals().map(meal => (
-                                        <Meal key={meal._id} meal={meal}></Meal>
-                                    ))}
-                                </ListGroup>
-                            </div>
-                        </div>
+                            <ListGroup>
+                                {filterMeals().map(meal => (
+                                    <Meal key={meal._id} meal={meal}></Meal>
+                                ))}
+                            </ListGroup>
+                        </>
                     )}
-        </div>
+        </>
     );
 }

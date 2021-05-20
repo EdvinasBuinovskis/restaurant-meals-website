@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import { MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'reactstrap';
 import { approveMeal } from '../redux/actions/mealActions';
 import LoadingBox from './LoadingBox';
 import MessageBox from './MessageBox';
@@ -21,16 +21,27 @@ export default function Favorite(props) {
     const updateApproved = () => {
         dispatch(approveMeal(mealId));
         setApproved(!isApproved);
+        window.location.reload(false);
     }
 
     return (
-        <div>
+        <>
             {loading ? (<LoadingBox></LoadingBox>) :
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
-                    (
-                        isApproved ? (<Button onClick={() => updateApproved()}>Pašalinti patvirtinimą</Button>) :
-                            (<Button onClick={() => updateApproved()}>Patvirtinti</Button>)
-                    )}
-        </div>
+                    // (
+                    //     isApproved ? (<Button onClick={() => updateApproved()}>Pašalinti patvirtinimą</Button>) :
+                    //         (<Button onClick={() => updateApproved()}>Patvirtinti</Button>)
+                    // )
+                    isApproved ? (
+                        <MDBBtn onClick={() => updateApproved()} tag='a' color='none' className='m-1' style={{ color: '#3b5998' }}>
+                            <MDBIcon far className='ms-1' icon='thumbs-down' size='2x' />
+                        </MDBBtn>
+                    ) : (
+                        <MDBBtn onClick={() => updateApproved()} tag='a' color='none' className='m-1' style={{ color: '#3b5998' }}>
+                            <MDBIcon far className='ms-1' icon='thumbs-up' size='2x' />
+                        </MDBBtn>
+                    )
+            }
+        </>
     )
 }

@@ -29,7 +29,7 @@ export default function Restaurant(props) {
     const { restaurant } = props;
     return (
         <MDBCol key={restaurant._id}>
-            <Link to={`/restaurants/${restaurant._id}`}>
+            <Link to={`/restaurants/${restaurant._id}`} style={{ color: "black", textDecoration: 'none' }}>
                 <MDBCard style={{ maxWidth: '22rem' }} className='h-100'>
                     <MDBRipple rippleColor='light' rippleTag='div' className='bg-image hover-overlay'>
                         <MDBCardImage src={`${process.env.REACT_APP_IMG}${restaurant.image}`} fluid alt="Failed to load image :/" position="top" />

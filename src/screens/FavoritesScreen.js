@@ -24,7 +24,6 @@ export default function FavoriteScreen() {
     };
 
     const filterMeals = () => {
-        console.log("favorite meals:", filterFavoriteMeals());
         if (searchTerm === '') {
             return filterFavoriteMeals();
         }
@@ -41,23 +40,21 @@ export default function FavoriteScreen() {
     }, [dispatch]);
 
     return (
-        <div>
+        <>
             {loading ? (<LoadingBox></LoadingBox>) :
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     loadingList ? (<LoadingBox></LoadingBox>) :
                         errorList ? (<MessageBox variant="danger">{errorList}</MessageBox>) :
                             (
-                                <div>
+                                <>
                                     <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-                                    <div>
-                                        <ListGroup>
-                                            {filterMeals().map(meal => (
-                                                <Meal key={meal._id} meal={meal}></Meal>
-                                            ))}
-                                        </ListGroup>
-                                    </div>
-                                </div>
+                                    <ListGroup>
+                                        {filterMeals().map(meal => (
+                                            <Meal key={meal._id} meal={meal}></Meal>
+                                        ))}
+                                    </ListGroup>
+                                </>
                             )}
-        </div>
+        </>
     );
 }

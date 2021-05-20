@@ -37,24 +37,21 @@ function App() {
       {/* <Header /> */}
       <HeaderMDB />
       <BrowserRouter>
-        <div>
-          <Switch>
-            <Route exact path="/" component={RestaurantListScreen}></Route>
-            <Route exact path="/restaurants" component={RestaurantListScreen}></Route>
-            <AdminRoute exact path="/restaurants/add" component={RestaurantCreateScreen}></AdminRoute>
-            <Route exact path="/restaurants/:id" component={RestaurantScreen}></Route>
-            <AdminRoute exact path="/restaurants/:id/edit" component={RestaurantEditScreen}></AdminRoute>
-            <Route exact path="/meals" component={MealListScreen}></Route>
-            <Route exact path="/meals/:id" component={MealScreen}></Route>
-            <PublicRoute exact path="/signin" component={SigninScreen}></PublicRoute>
-            <PublicRoute exact path="/register" component={RegisterScreen}></PublicRoute>
-            <PrivateRoute exact path="/favorites" component={FavoritesScreen}></PrivateRoute>
-            <PrivateRoute exact path="/mymeals" component={UserMealScreen}></PrivateRoute>
-            <PrivateRoute exact path="/mymeals/add" component={MealCreateScreen}></PrivateRoute>
-            <PrivateRoute exact path="/mymeals/:id/edit" component={MealEditScreen}></PrivateRoute>
-
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/" component={RestaurantListScreen}></Route>
+          <Route exact path="/restaurants" component={RestaurantListScreen}></Route>
+          <AdminRoute exact path="/restaurants/add" component={RestaurantCreateScreen}></AdminRoute>
+          <Route exact path="/restaurants/:id" component={RestaurantScreen}></Route>
+          <AdminRoute exact path="/restaurants/:id/edit" component={RestaurantEditScreen}></AdminRoute>
+          <Route exact path="/meals" component={MealListScreen}></Route>
+          <Route exact path="/meals/:id" component={MealScreen}></Route>
+          <PublicRoute exact path="/signin" component={SigninScreen}></PublicRoute>
+          <PublicRoute exact path="/register" component={RegisterScreen}></PublicRoute>
+          <PrivateRoute exact path="/favorites" component={FavoritesScreen}></PrivateRoute>
+          <PrivateRoute exact path="/mymeals" component={UserMealScreen}></PrivateRoute>
+          <PrivateRoute exact path="/mymeals/add" component={MealCreateScreen}></PrivateRoute>
+          <PrivateRoute exact path="/mymeals/:id/edit" component={MealEditScreen}></PrivateRoute>
+        </Switch>
       </BrowserRouter>
     </div>
   );

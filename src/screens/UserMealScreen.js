@@ -1,4 +1,4 @@
-import { Button, ListGroup } from 'reactstrap';
+import { ListGroup } from 'reactstrap';
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { listMeals } from '../redux/actions/mealActions';
@@ -6,6 +6,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Meal from '../components/Meal';
 import Search from '../components/Search';
+import { MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 
 export default function UserMealScreen() {
 
@@ -23,7 +24,6 @@ export default function UserMealScreen() {
     };
 
     const filterMeals = () => {
-        console.log("users meals:", filterUserMeals());
         if (searchTerm === '') {
             return filterUserMeals();
         }
@@ -39,22 +39,22 @@ export default function UserMealScreen() {
     }, [dispatch]);
 
     return (
-        <div>
+        <>
             {loading ? (<LoadingBox></LoadingBox>) :
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     (
-                        <div>
+                        <>
                             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-                            <Button href="/mymeals/add">Pridėti patiekalą</Button>
-                            <div>
-                                <ListGroup>
-                                    {filterMeals().map(meal => (
-                                        <Meal key={meal._id} meal={meal}></Meal>
-                                    ))}
-                                </ListGroup>
-                            </div>
-                        </div>
+                            <MDBBtn href="/mymeals/add" tag='a' color='none' className='m-1' >
+                                <MDBIcon fas className='ms-1' icon='plus' size='2x' />
+                            </MDBBtn>
+                            <ListGroup>
+                                {filterMeals().map(meal => (
+                                    <Meal key={meal._id} meal={meal}></Meal>
+                                ))}
+                            </ListGroup>
+                        </>
                     )}
-        </div>
+        </>
     );
 }

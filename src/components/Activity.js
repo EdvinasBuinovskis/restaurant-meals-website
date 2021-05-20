@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
-import { Card, CardBody, CardText, CardTitle, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Button } from 'reactstrap'
+import { MDBBtn } from 'mdb-react-ui-kit';
+import React, { useEffect, useState } from 'react'
+import { Card, CardBody, CardText, CardTitle, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from 'reactstrap'
 
 export default function Activity({ kcal }) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -9,6 +10,12 @@ export default function Activity({ kcal }) {
     const [minutes, setMinutes] = useState('');
     const [minOrH, setMinOrH] = useState('minutes');
     const toggle = () => setDropdownOpen(prevState => !prevState);
+
+    useEffect(() => {
+        if (localStorage.getItem("userWeight")) {
+            setWeight(localStorage.getItem("userWeight"));
+        }
+    }, []);
 
     const metValues = [
         {
@@ -28,11 +35,13 @@ export default function Activity({ kcal }) {
             met: 6
         }
     ];
+
     function handleClick() {
         if (activity != "Pasirinkite veiklą" && weight != '') {
             const value = metValues.filter(obj => obj.activityName === activity)[0].met;
             const kcalPerMin = value * 3.5 * weight / 200;
             const activityMin = Math.round(kcal / kcalPerMin);
+            localStorage.setItem("userWeight", weight);
             if (activityMin >= 60) {
                 const hours = Math.floor(activityMin / 60);
                 const minutes = activityMin % 60;
@@ -50,7 +59,7 @@ export default function Activity({ kcal }) {
     }
 
     return (
-        <div>
+        <>
             <Card>
                 <CardBody>
                     <CardTitle tag="h5">Sudeginkite kalorijas</CardTitle>
@@ -63,7 +72,7 @@ export default function Activity({ kcal }) {
                     }
 
                     <Dropdown isOpen={dropdownOpen} toggle={toggle} >
-                        <DropdownToggle caret>
+                        <DropdownToggle color="primary" caret>
                             {activity}
                         </DropdownToggle>
                         <DropdownMenu onClick={(e) => setActivity(e.target.value)}>
@@ -75,11 +84,11 @@ export default function Activity({ kcal }) {
                         </DropdownMenu>
                     </Dropdown>
 
-                    <Input onChange={(e) => setWeight(e.target.value)} />
-                    <Button onClick={handleClick}>Skaičiuoti</Button>
+                    <Input defaultValue={weight} onChange={(e) => setWeight(e.target.value)} />
+                    <MDBBtn color="primary" onClick={handleClick}>Skaičiuoti</MDBBtn>
 
                 </CardBody>
             </Card>
-        </div>
+        </>
     )
 }

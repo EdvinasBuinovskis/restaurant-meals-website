@@ -5,8 +5,7 @@ import MessageBox from '../components/MessageBox';
 import Restaurant from '../components/Restaurant';
 import { listRestaurants } from '../redux/actions/restaurantActions';
 import Search from '../components/Search';
-import { Button } from 'reactstrap';
-import { MDBCardGroup } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBCardGroup, MDBIcon } from 'mdb-react-ui-kit';
 
 export default function RestaurantListScreen() {
     const dispatch = useDispatch();
@@ -35,34 +34,36 @@ export default function RestaurantListScreen() {
     }, [dispatch]);
 
     return (
-        <div>
+        <>
             {loading ? (<LoadingBox></LoadingBox>) :
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     (
-                        <div>
+                        <>
                             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                             {
                                 userInfo ? (
-                                    <div>
+                                    <>
                                         {userInfo.isAdmin ? (
-                                            <Button href="/restaurants/add">Pridėti</Button>
+                                            <MDBBtn href="/restaurants/add" tag='a' color='none' className='m-1' >
+                                                <MDBIcon fas className='ms-1' icon='plus' size='2x' />
+                                            </MDBBtn>
                                         ) : (
-                                            <div></div>
+                                            <></>
                                         )}
-                                    </div>
+                                    </>
                                 ) : (
-                                    <div></div>
+                                    <></>
                                 )
                             }
-                            <MDBCardGroup>
+                            <MDBCardGroup style={{ padding: '1rem' }}>
                                 <div className="row center">
                                     {filterRestaurants().map(restaurant => (
                                         <Restaurant key={restaurant._id} restaurant={restaurant}></Restaurant>
                                     ))}
                                 </div>
                             </MDBCardGroup>
-                        </div>
+                        </>
                     )}
-        </div>
+        </>
     );
 }

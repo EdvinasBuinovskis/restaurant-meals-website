@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateMeal, detailsMeal } from '../redux/actions/mealActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Col, Form, FormGroup, Input, Label } from 'reactstrap';
 import { listRestaurants } from '../redux/actions/restaurantActions';
 import Axios from 'axios';
+import { MDBBtn } from 'mdb-react-ui-kit';
 
 export default function MealEditScreen(props) {
 
@@ -171,7 +172,7 @@ export default function MealEditScreen(props) {
                 </FormGroup>
                 <FormGroup check row>
                     <Col sm={{ size: 10, offset: 1 }}>
-                        <Button type="submit">Atnaujinti</Button>
+                        <MDBBtn color="primary" type="submit">Atnaujinti</MDBBtn>
                     </Col>
                 </FormGroup>
             </Form>

@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap'
+import { Col, Form, FormGroup, Input, Label } from 'reactstrap'
 import { signin } from '../redux/actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { MDBBtn } from 'mdb-react-ui-kit';
 
 export default function LoginScreen(props) {
 
@@ -56,7 +57,7 @@ export default function LoginScreen(props) {
                 </FormGroup>
                 <FormGroup check row>
                     <Col sm={{ size: 10, offset: 1 }}>
-                        <Button type="submit">Prisijungti</Button>
+                        <MDBBtn color="primary" type="submit">Prisijungti</MDBBtn>
                     </Col>
                 </FormGroup>
                 <FormGroup row>

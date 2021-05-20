@@ -1,10 +1,9 @@
 /* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+import { MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Button, Container, Jumbotron, ListGroup } from 'reactstrap';
+import { Container, Jumbotron, ListGroup } from 'reactstrap';
 import LoadingBox from '../components/LoadingBox';
 import Meal from '../components/Meal';
 import MessageBox from '../components/MessageBox';
@@ -39,9 +38,6 @@ export default function RestaurantScreen(props) {
             props.history.push(`/restaurants`)
     }, [successDelete]);
 
-    // const mealsFiltered = meals.filter(obj => obj.company === restaurant.company);
-    // console.log("meals: ", meals);
-
     const deleteHandler = () => {
         if (window.confirm('Are you sure you want to delete?')) {
             dispatch(deleteRestaurant(restaurantId));
@@ -50,51 +46,49 @@ export default function RestaurantScreen(props) {
 
 
     return (
-        <div>
+        <>
             {loading ? (<LoadingBox></LoadingBox>) :
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     (
-                        <div>
-                            <div>
-                                {
-                                    userInfo ? (
-                                        <div>
-                                            {userInfo.isAdmin ? (
-                                                <div>
-                                                    <Button href={`/restaurants/${restaurant._id}/edit`} >Redaguoti</Button>
-                                                    <Button onClick={() => deleteHandler()}>Pašalinti</Button>
+                        <>
+                            <>
+                                <Jumbotron fluid style={{ padding: "0.5rem" }}>
+                                    <Container fluid>
+                                        {
+                                            userInfo?.isAdmin ? (
+                                                <div style={{ padding: "0.5rem" }}>
+                                                    <MDBBtn href={`/restaurants/${restaurant._id}/edit`} tag='a' color='none' className='m-1' >
+                                                        <MDBIcon fas className='ms-1' icon='edit' size='2x' />
+                                                    </MDBBtn>
+                                                    <MDBBtn onClick={() => deleteHandler()} tag='a' color='none' className='m-1' >
+                                                        <MDBIcon fas className='ms-1' icon='trash' size='2x' />
+                                                    </MDBBtn>
+                                                    {/* <Button href={`/restaurants/${restaurant._id}/edit`} >Redaguoti</Button>
+                                                <Button onClick={() => deleteHandler()}>Pašalinti</Button> */}
                                                 </div>
                                             ) : (
-                                                <div></div>
-                                            )}
-                                        </div>
-                                    ) : (
-                                        <div></div>
-                                    )
-                                }
-                                <Jumbotron fluid>
-                                    <Container fluid>
+                                                <></>
+                                            )
+                                        }
                                         <img top src={`${process.env.REACT_APP_IMG}${restaurant.image}`} alt="failed to load photo :/" style={{ maxWidth: '22rem', maxHeight: '22rem' }}></img>
                                         {/* <img top src={restaurant.image} alt="failed to load photo :/" style={{ maxWidth: '22rem', maxHeight: '22rem' }}></img> */}
                                         <h1 className="display-3">{restaurant.name}</h1>
                                         <p className="lead">{restaurant.description}</p>
                                     </Container>
                                 </Jumbotron>
-                            </div>
+                            </>
                             {loadingList ? (<LoadingBox></LoadingBox>) :
                                 errorList ? (<MessageBox variant="danger">{error}</MessageBox>) :
                                     (
-                                        <div>
-                                            <ListGroup>
-                                                {meals.filter(obj => obj.restaurant_id === restaurant._id).map(meal => (
-                                                    <Meal key={meal._id} meal={meal}></Meal>
-                                                ))}
-                                            </ListGroup>
-                                        </div>
+                                        <ListGroup>
+                                            {meals.filter(obj => obj.restaurant_id === restaurant._id).map(meal => (
+                                                <Meal key={meal._id} meal={meal}></Meal>
+                                            ))}
+                                        </ListGroup>
                                     )}
-                        </div>
+                        </>
                     )}
 
-        </div>
+        </>
     );
 }

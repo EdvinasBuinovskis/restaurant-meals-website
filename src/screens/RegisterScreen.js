@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap'
+import { Col, Form, FormGroup, Input, Label } from 'reactstrap'
 import { register } from '../redux/actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useDispatch, useSelector } from 'react-redux';
+import { MDBBtn } from 'mdb-react-ui-kit';
 
 export default function RegisterScreen(props) {
 
@@ -21,14 +22,37 @@ export default function RegisterScreen(props) {
 
     const dispatch = useDispatch();
 
+    const lowercasePassword = new RegExp('(?=.*[a-z])');
+    const uppercasePassword = new RegExp('(?=.*[A-Z])');
+    const digitPassword = new RegExp('(?=.*[0-9])');
+    const specialPassword = new RegExp('(?=.*[^A-Za-z0-9])');
+    const lengthPassword = new RegExp('(?=.{8,})');
+    const emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+
     const submitHandler = (e) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
-            alert('Slaptažodis ir patvirtinimo slaptažodis nesutampa');
-        } else {
-            dispatch(register(username, email, password));
-        }
+
+        if (!emailRegex.test(email))
+            return alert("Neteisingai įvedėte el. paštą");
+
+        if (!lowercasePassword.test(password))
+            return alert('Slaptažodyje turi būti bent viena mažoji raidė');
+        if (!uppercasePassword.test(password))
+            return alert('Slaptažodyje turi būti bent viena didžioji raidė');
+        if (!digitPassword.test(password))
+            return alert('Slaptažodyje turi būti bent vienas skaičius');
+        if (!specialPassword.test(password))
+            return alert('Slaptažodyje turi būti bent vienas specialus simbolis');
+        if (!lengthPassword.test(password))
+            return alert('Slaptažodis turi būti bent 8 simbolių ilgio');
+
+        if (password !== confirmPassword)
+            return alert('Slaptažodis ir patvirtinimo slaptažodis nesutampa');
+
+        dispatch(register(username, email, password));
+
     };
+
 
     useEffect(() => {
         if (userInfo) {
@@ -78,7 +102,7 @@ export default function RegisterScreen(props) {
                 </FormGroup>
                 <FormGroup check row>
                     <Col sm={{ size: 10, offset: 1 }}>
-                        <Button type="submit">Registruotis</Button>
+                        <MDBBtn color="primary" type="submit">Registruotis</MDBBtn>
                     </Col>
                 </FormGroup>
                 <FormGroup row>

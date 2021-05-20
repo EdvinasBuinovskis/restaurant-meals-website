@@ -6,11 +6,12 @@ import { detailsMeal, deleteMeal } from '../redux/actions/mealActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 // import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Row } from 'reactstrap';
-import { Button } from 'reactstrap';
 import Activity from '../components/Activity';
 import Favorite from '../components/Favorite';
 import Approve from '../components/Approve';
-import { MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCol, MDBListGroup, MDBListGroupItem, MDBRow } from 'mdb-react-ui-kit';
+import MealRec from '../components/MealRec';
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCol, MDBIcon, MDBListGroup, MDBListGroupItem, MDBRow } from 'mdb-react-ui-kit';
+import Chart from '../components/Chart';
 
 
 export default function MealScreen(props) {
@@ -40,41 +41,40 @@ export default function MealScreen(props) {
     };
 
     return (
-        <div>
+        <>
             {loading ? (<LoadingBox></LoadingBox>) :
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
                     (
-                        <div>
+                        <>
+
                             {
                                 userInfo ? (
-                                    <div>
-                                        {userInfo.isAdmin ? (
-                                            <div>
+                                    <div style={{ padding: "1rem" }}>
+                                        {
+                                            userInfo.isAdmin ? (
                                                 <Approve mealId={mealId} isApproved={meal.approved} />
-                                            </div>
-                                        ) : (
-                                            <div></div>
-                                        )}
-                                    </div>
-                                ) : (
-                                    <div></div>
-                                )
-                            }
-                            {
-                                userInfo ? (
-                                    <div>
+                                            ) : (
+                                                <></>
+                                            )
+                                        }
                                         <Favorite mealId={mealId} />
                                         {userInfo._id === meal.createdBy ? (
-                                            <div>
-                                                <Button href={`/mymeals/${meal._id}/edit`} >Redaguoti</Button>
-                                                <Button onClick={() => deleteHandler()}>Pašalinti</Button>
-                                            </div>
+                                            <>
+                                                <MDBBtn href={`/mymeals/${meal._id}/edit`} tag='a' color='none' className='m-1' >
+                                                    <MDBIcon fas className='ms-1' icon='edit' size='2x' />
+                                                </MDBBtn>
+                                                <MDBBtn onClick={() => deleteHandler()} tag='a' color='none' className='m-1' >
+                                                    <MDBIcon fas className='ms-1' icon='trash' size='2x' />
+                                                </MDBBtn>
+                                                {/* <Button href={`/mymeals/${meal._id}/edit`} >Redaguoti</Button>
+                                                <Button onClick={() => deleteHandler()}>Pašalinti</Button> */}
+                                            </>
                                         ) : (
-                                            <div></div>
+                                            <></>
                                         )}
                                     </div>
                                 ) : (
-                                    <div></div>
+                                    <></>
                                 )
                             }
                             {/* <Row>
@@ -98,8 +98,13 @@ export default function MealScreen(props) {
                                 <MDBCol>
                                     <MDBCard style={{ width: '30rem' }}>
                                         <MDBCardImage position='top' src={`${process.env.REACT_APP_IMG}${meal.image}`} alt="failed to load photo :/" style={{ maxWidth: '30rem', maxHeight: '30rem' }} />
-                                        <MDBCardBody>
-                                            <MDBCardTitle>{meal.name}</MDBCardTitle>
+                                        <MDBCardBody style={{ height: '3rem', padding: '0.7rem' }}>
+                                            <MDBCardTitle>
+                                                {meal.name}
+                                                {meal.approved ? <MDBIcon className='ms-1' icon='check' size='sm' /> :
+                                                    <></>
+                                                }
+                                            </MDBCardTitle>
                                         </MDBCardBody>
                                         <MDBListGroup flush>
                                             <MDBListGroupItem>Kalorijos:  {meal.kcal}</MDBListGroupItem>
@@ -111,11 +116,21 @@ export default function MealScreen(props) {
                                 </MDBCol>
                                 <MDBCol>
                                     <Activity kcal={meal.kcal} />
+                                    <MDBRow>
+                                        <MDBCol style={{ padding: '2rem', maxWidth: '26rem', maxHeight: '26rem' }}>
+                                            <Chart meal={meal} />
+                                        </MDBCol>
+                                    </MDBRow>
                                 </MDBCol>
                             </MDBRow>
-                        </div>
+                            <MDBRow center className='row-cols-1 row-cols-md-2 g-4' style={{ padding: '2rem' }}>
+                                <MDBCol>
+                                    <MealRec restaurantId={meal.restaurant_id} mealName={meal.name} />
+                                </MDBCol>
+                            </MDBRow>
+                        </>
                     )}
-        </div>
+        </>
     );
 }
 

@@ -7,8 +7,10 @@
 
 # testing
 /coverage
-
+/cypress
+cypress.json
 # production
+.env
 #/build
 
 # misc
@@ -22,4 +24,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.env
+
+

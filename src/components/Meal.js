@@ -10,7 +10,7 @@ export default function Meal(props) {
             <ListGroupItem tag="a" href={`/meals/${meal._id}`} action>
                 {meal.name}
                 {meal.approved ? <MDBIcon className='ms-1' icon='check' size='sm' /> :
-                    <div></div>
+                    <></>
                 }
             </ListGroupItem>
         </div>
