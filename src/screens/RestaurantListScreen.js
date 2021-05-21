@@ -45,7 +45,7 @@ export default function RestaurantListScreen() {
                                     <>
                                         {userInfo.isAdmin ? (
                                             <MDBBtn href="/restaurants/add" tag='a' color='none' className='m-1' >
-                                                <MDBIcon fas className='ms-1' icon='plus' size='2x' />
+                                                <MDBIcon fas className='ms-3' icon='plus' size='2x' />
                                             </MDBBtn>
                                         ) : (
                                             <></>
@@ -55,7 +55,7 @@ export default function RestaurantListScreen() {
                                     <></>
                                 )
                             }
-                            <MDBCardGroup style={{ padding: '1rem' }}>
+                            <MDBCardGroup style={{ padding: '1rem', paddingTop: "0.5rem" }}>
                                 <div className="row center">
                                     {filterRestaurants().map(restaurant => (
                                         <Restaurant key={restaurant._id} restaurant={restaurant}></Restaurant>

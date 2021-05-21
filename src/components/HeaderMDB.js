@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signout } from '../redux/actions/userActions';
 import {
@@ -24,6 +25,8 @@ export default function App() {
         dispatch(signout());
     }
 
+    const pathname = window.location.pathname;
+
     return (
         <header>
             <MDBNavbar expand='lg' light bgColor='white'>
@@ -35,21 +38,21 @@ export default function App() {
                     <Collapse isOpen={isOpen} navbar>
 
                         <MDBNavbarNav right className='mb-2 mb-lg-0'>
-                            <MDBNavbarItem active>
+                            <MDBNavbarItem active={pathname == '/' || pathname == '/restaurants'}>
                                 <MDBNavbarLink aria-current='page' href='/restaurants'>
                                     Restoranai
-                            </MDBNavbarLink>
+                                </MDBNavbarLink>
                             </MDBNavbarItem>
-                            <MDBNavbarItem>
+                            <MDBNavbarItem active={pathname == '/meals'}>
                                 <MDBNavbarLink href='/meals'>Patiekalai</MDBNavbarLink>
                             </MDBNavbarItem>
                             {
                                 userInfo ? (
                                     <>
-                                        <MDBNavbarItem>
+                                        <MDBNavbarItem active={pathname == '/favorites'}>
                                             <MDBNavbarLink href="/favorites">Įsiminti</MDBNavbarLink>
                                         </MDBNavbarItem>
-                                        <MDBNavbarItem>
+                                        <MDBNavbarItem active={pathname == '/mymeals'}>
                                             <MDBNavbarLink href="/mymeals">Mano patiekalai</MDBNavbarLink>
                                         </MDBNavbarItem>
 

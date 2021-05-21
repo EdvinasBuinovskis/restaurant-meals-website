@@ -49,7 +49,7 @@ export default function MealScreen(props) {
 
                             {
                                 userInfo ? (
-                                    <div style={{ padding: "1rem" }}>
+                                    <div style={{ marginTop: "1rem", marginLeft: "1rem" }}>
                                         {
                                             userInfo.isAdmin ? (
                                                 <Approve mealId={mealId} isApproved={meal.approved} />
@@ -94,7 +94,7 @@ export default function MealScreen(props) {
                                     <Activity kcal={meal.kcal} />
                                 </Col>
                             </Row> */}
-                            <MDBRow center className='row-cols-1 row-cols-md-3 g-4'>
+                            <MDBRow center className='row-cols-1 row-cols-md-3 py-4'>
                                 <MDBCol>
                                     <MDBCard style={{ width: '30rem' }}>
                                         <MDBCardImage position='top' src={`${process.env.REACT_APP_IMG}${meal.image}`} alt="failed to load photo :/" style={{ maxWidth: '30rem', maxHeight: '30rem' }} />

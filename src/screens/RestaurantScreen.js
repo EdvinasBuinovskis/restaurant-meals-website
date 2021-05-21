@@ -52,8 +52,8 @@ export default function RestaurantScreen(props) {
                     (
                         <>
                             <>
-                                <Jumbotron fluid style={{ padding: "0.5rem" }}>
-                                    <Container fluid>
+                                <Jumbotron fluid style={{ padding: "1rem", marginBottom: "0.1rem" }}>
+                                    <Container fluid style={{ padding: "0rem" }}>
                                         {
                                             userInfo?.isAdmin ? (
                                                 <div style={{ padding: "0.5rem" }}>
@@ -80,7 +80,7 @@ export default function RestaurantScreen(props) {
                             {loadingList ? (<LoadingBox></LoadingBox>) :
                                 errorList ? (<MessageBox variant="danger">{error}</MessageBox>) :
                                     (
-                                        <ListGroup>
+                                        <ListGroup style={{ padding: "1rem" }}>
                                             {meals.filter(obj => obj.restaurant_id === restaurant._id).map(meal => (
                                                 <Meal key={meal._id} meal={meal}></Meal>
                                             ))}

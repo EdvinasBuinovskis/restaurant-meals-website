@@ -26,6 +26,7 @@ import AdminRoute from './components/AdminRoute';
 
 
 import HeaderMDB from './components/HeaderMDB';
+import Footer from './components/Footer';
 
 import Axios from 'axios';
 
@@ -53,6 +54,7 @@ function App() {
           <PrivateRoute exact path="/mymeals/:id/edit" component={MealEditScreen}></PrivateRoute>
         </Switch>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }

@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Col, Form, FormGroup, Input, Label } from 'reactstrap'
+// import { Col, Form, FormGroup, Input, Label } from 'reactstrap'
 import { signin } from '../redux/actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { MDBBtn } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow } from 'mdb-react-ui-kit';
+import { Label } from 'reactstrap';
 
 export default function LoginScreen(props) {
 
@@ -34,39 +35,79 @@ export default function LoginScreen(props) {
 
 
     return (
-        <div md={{ size: 4, offset: 1 }}>
-            <Form onSubmit={submitHandler}>
-                <FormGroup row>
-                    <Col md={{ size: 4, offset: 1 }}>
-                        <Label>Prisijungimas</Label>
-                    </Col>
-                </FormGroup>
-                {loading && <LoadingBox></LoadingBox>}
-                {error && <MessageBox variant="danger">{error}</MessageBox>}
-                <FormGroup row>
-                    <Label for="usernameField" sm={1}>Naudotojo vardas</Label>
-                    <Col md={{ size: 4 }}>
-                        <Input required type="text" name="username" id="usernameField" placeholder="Įveskite naudotojo vardą" onChange={(e) => setUsername(e.target.value)} />
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Label for="passwordField" sm={1}>Slaptažodis</Label>
-                    <Col md={{ size: 4 }}>
-                        <Input required type="password" name="password" id="passwordField" placeholder="Įveskite slaptažodį" onChange={(e) => setPassword(e.target.value)} />
-                    </Col>
-                </FormGroup>
-                <FormGroup check row>
-                    <Col sm={{ size: 10, offset: 1 }}>
-                        <MDBBtn color="primary" type="submit">Prisijungti</MDBBtn>
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Col md={{ size: 4, offset: 1 }}>
-                        <Input plaintext value="Naujas naudotojas?" />
-                        <Link to="/register">Registruotis</Link>
-                    </Col>
-                </FormGroup>
-            </Form>
-        </div>
+        //     <div md={{ size: 4, offset: 1 }}>
+        //         <Form onSubmit={submitHandler}>
+        //             <FormGroup row>
+        //                 <Col md={{ size: 4, offset: 1 }}>
+        //                     <Label>Prisijungimas</Label>
+        //                 </Col>
+        //             </FormGroup>
+        //             {loading && <LoadingBox></LoadingBox>}
+        //             {error && <MessageBox variant="danger">{error}</MessageBox>}
+        //             <FormGroup row>
+        //                 <Label for="usernameField" sm={1}>Naudotojo vardas</Label>
+        //                 <Col md={{ size: 4 }}>
+        //                     <Input required type="text" name="username" id="usernameField" placeholder="Įveskite naudotojo vardą" onChange={(e) => setUsername(e.target.value)} />
+        //                 </Col>
+        //             </FormGroup>
+        //             <FormGroup row>
+        //                 <Label for="passwordField" sm={1}>Slaptažodis</Label>
+        //                 <Col md={{ size: 4 }}>
+        //                     <Input required type="password" name="password" id="passwordField" placeholder="Įveskite slaptažodį" onChange={(e) => setPassword(e.target.value)} />
+        //                 </Col>
+        //             </FormGroup>
+        //             <FormGroup check row>
+        //                 <Col sm={{ size: 10, offset: 1 }}>
+        //                     <MDBBtn color="primary" type="submit">Prisijungti</MDBBtn>
+        //                 </Col>
+        //             </FormGroup>
+        //             <FormGroup row>
+        //                 <Col md={{ size: 4, offset: 1 }}>
+        //                     <Input plaintext value="Naujas naudotojas?" />
+        //                     <Link to="/register">Registruotis</Link>
+        //                 </Col>
+        //             </FormGroup>
+        //         </Form>
+        //     </div>
+        <MDBContainer>
+            <MDBRow className="d-flex justify-content-center py-4">
+                <MDBCol md="6">
+                    <MDBCard>
+                        <MDBCardBody>
+                            <form onSubmit={submitHandler}>
+                                <h4 className="text-center py-4">Prisijungimas</h4>
+                                {loading && <LoadingBox></LoadingBox>}
+                                {error && <MessageBox variant="danger">{error}</MessageBox>}
+                                <MDBInput className='mb-4'
+                                    id="usernameField"
+                                    label="Naudotojo vardas"
+                                    placeholder="Įveskite naudotojo vardą"
+                                    type="text"
+                                    required
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                                <MDBInput
+                                    id="passwordField"
+                                    label="Slaptažodis"
+                                    placeholder="Įveskite slaptažodį"
+                                    type="password"
+                                    required
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <div className="text-center py-4">
+                                    <MDBBtn color="primary" type="submit">
+                                        Prisijungti
+                                    </MDBBtn>
+                                </div>
+                                <div className="text-center">
+                                    <Label>Naujas naudotojas?</Label>
+                                    <Link to="/register"> Registruotis</Link>
+                                </div>
+                            </form>
+                        </MDBCardBody>
+                    </MDBCard>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
     )
 }

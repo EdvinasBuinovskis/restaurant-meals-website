@@ -48,7 +48,7 @@ export default function FavoriteScreen() {
                             (
                                 <>
                                     <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-                                    <ListGroup>
+                                    <ListGroup style={{ padding: "1rem" }}>
                                         {filterMeals().map(meal => (
                                             <Meal key={meal._id} meal={meal}></Meal>
                                         ))}

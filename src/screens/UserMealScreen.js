@@ -46,9 +46,9 @@ export default function UserMealScreen() {
                         <>
                             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                             <MDBBtn href="/mymeals/add" tag='a' color='none' className='m-1' >
-                                <MDBIcon fas className='ms-1' icon='plus' size='2x' />
+                                <MDBIcon fas className='ms-3' icon='plus' size='2x' />
                             </MDBBtn>
-                            <ListGroup>
+                            <ListGroup style={{ padding: "1rem", paddingTop: "0.5rem" }}>
                                 {filterMeals().map(meal => (
                                     <Meal key={meal._id} meal={meal}></Meal>
                                 ))}
