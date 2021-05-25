@@ -5,7 +5,6 @@ import { restaurantListReducer, restaurantDetailsReducer, restaurantCreateReduce
 import { userDetailsReducer, userRegisterReducer, userSigninReducer } from './reducers/userReducers'
 import { favoriteCreateReducer, favoriteDeleteReducer, favoriteListReducer } from './reducers/favoriteReducers';
 
-//pridet authentikacija
 const initialState = {
   userSignin: {
     userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null

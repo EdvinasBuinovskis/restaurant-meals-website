@@ -42,13 +42,6 @@ export default function Favorite(props) {
         <>
             {loading ? (<LoadingBox></LoadingBox>) :
                 error ? (<MessageBox variant="danger">{error}</MessageBox>) :
-                    // (
-                    //     isFavorite ? (<Button onClick={() => removeFavorite()}>
-                    //         {/* Pašalinti iš įsimintų */}
-                    //         <MDBIcon className='ms-1' icon='heart' size='sm' />
-                    //     </Button>) :
-                    //         (<Button onClick={() => addFavorite()}>Pridėti prie įsimintų</Button>)
-                    // )
                     (
                         isFavorite ? (
                             <MDBBtn onClick={() => removeFavorite()} tag='a' color='none' className='m-1' style={{ color: '#3b5998' }}>

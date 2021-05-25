@@ -61,17 +61,14 @@ export default function RestaurantScreen(props) {
                                                         <MDBIcon fas className='ms-1' icon='edit' size='2x' />
                                                     </MDBBtn>
                                                     <MDBBtn onClick={() => deleteHandler()} tag='a' color='none' className='m-1' >
-                                                        <MDBIcon fas className='ms-1' icon='trash' size='2x' />
+                                                        <MDBIcon fas className='ms-1' icon='trash' size='2x' color="danger" />
                                                     </MDBBtn>
-                                                    {/* <Button href={`/restaurants/${restaurant._id}/edit`} >Redaguoti</Button>
-                                                <Button onClick={() => deleteHandler()}>Pašalinti</Button> */}
                                                 </div>
                                             ) : (
                                                 <></>
                                             )
                                         }
                                         <img top src={`${process.env.REACT_APP_IMG}${restaurant.image}`} alt="failed to load photo :/" style={{ maxWidth: '22rem', maxHeight: '22rem' }}></img>
-                                        {/* <img top src={restaurant.image} alt="failed to load photo :/" style={{ maxWidth: '22rem', maxHeight: '22rem' }}></img> */}
                                         <h1 className="display-3">{restaurant.name}</h1>
                                         <p className="lead">{restaurant.description}</p>
                                     </Container>

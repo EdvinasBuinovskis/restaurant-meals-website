@@ -1,0 +1,30 @@
+/* eslint-disable no-undef */
+describe("TA10 sistemos naudotojo pridėto patiekalo prie įsimintų patiekalų tinklapio pašalinimas", () => {
+
+    before(() => {
+        cy.login()
+        cy.contains("Įsiminti")
+        cy.saveLocalStorage()
+    })
+
+    beforeEach(() => {
+        cy.restoreLocalStorage()
+    });
+
+    it('įsiminto patiekalo tinklapio atidarymas', function () {
+        cy.get(':nth-child(3) > [data-test=nav-link]').click();
+        cy.contains('Mėsainis').click();
+    });
+
+    it('patiekalo pašalinimas iš įsimintų', function () {
+        cy.contains('Pašalinti iš įsimintų');
+        cy.get(':nth-child(2) > :nth-child(1) > .btn').click();
+        cy.contains('Pridėti prie įsimintų');
+    });
+
+    it('patiekalas sėkmingai pašalintas iš įsimintų', function () {
+        cy.contains("Įsiminti").click();
+        cy.contains("Mėsainis").should("not.exist");
+    });
+
+})

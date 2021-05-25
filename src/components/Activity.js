@@ -76,7 +76,6 @@ export default function Activity({ kcal }) {
                             {activity}
                         </DropdownToggle>
                         <DropdownMenu onClick={(e) => setActivity(e.target.value)}>
-                            {/* <DropdownMenu onClick={handleClick}> */}
                             <DropdownItem value="Važinėdami dviračiu">Važinėdami dviračiu</DropdownItem>
                             <DropdownItem value="Bėgiodami">Bėgiodami</DropdownItem>
                             <DropdownItem value="Vaikščiodami">Vaikščiodami</DropdownItem>

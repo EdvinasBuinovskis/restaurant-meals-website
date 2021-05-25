@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-/cypress
+/cypress/integration/.examples
 cypress.json
 # production
 .env

@@ -1,21 +1,20 @@
 /* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createRestaurant } from '../redux/actions/restaurantActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Input } from 'reactstrap';
 import Axios from 'axios';
-import { MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBInputGroup, MDBRow } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow } from 'mdb-react-ui-kit';
 
 export default function RestaurantCreateScreen(props) {
 
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
+    const [previewSource, setPreviewSource] = useState('');
     const [description, setDescription] = useState('');
-
 
     const dispatch = useDispatch();
 
@@ -34,34 +33,52 @@ export default function RestaurantCreateScreen(props) {
         }
     }, [dispatch, success]);
 
+    useEffect(() => {
+        if (image !== '') {
+            dispatch(createRestaurant({
+                name,
+                image,
+                description
+            }));
+        }
+    }, [image]);
+
     const createHandler = (e) => {
         e.preventDefault();
-        dispatch(createRestaurant({
-            name,
-            image,
-            description
-        }));
+        uploadFileHandler();
     };
 
-    const uploadFileHandler = async (e) => {
+    const changeFileHandler = (e) => {
         const file = e.target.files[0];
-        const bodyFormData = new FormData();
-        bodyFormData.append('image', file);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSource(reader.result);
+        }
+    }
+
+    const uploadFileHandler = () => {
+        if (!previewSource) return
+        uploadImage(previewSource);
+    }
+
+    const uploadImage = async (base64EncodedImage) => {
         setLoadingUpload(true);
         try {
-            const { data } = await Axios.post('/api/uploads', bodyFormData, {
+            const { data } = await Axios.post('/api/uploads', JSON.stringify({ data: base64EncodedImage }), {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${userInfo.token}`,
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
                 },
             });
             setImage(data);
+            console.log(data);
             setLoadingUpload(false);
         } catch (error) {
             setErrorUpload(error.message);
             setLoadingUpload(false);
         }
-    };
+    }
 
 
     return (
@@ -83,13 +100,13 @@ export default function RestaurantCreateScreen(props) {
                                     onChange={(e) => setName(e.target.value)}
                                 />
                                 <label>Pasirinkite paveikslėlį</label>
-                                <MDBInputGroup className='mb-3'>
-                                    <Input required type="file" name="imageUpload" id="imageField" label="Choose Image" onChange={uploadFileHandler} />
-                                    <img src={`${process.env.REACT_APP_IMG}${image}`} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
-                                    {loadingUpload && <LoadingBox></LoadingBox>}
-                                    {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
-                                </MDBInputGroup>
-                                <MDBInput className='mb-3'
+                                <Input required type="file" name="imageUpload" id="imageField" onChange={changeFileHandler} className='mb-2' />
+                                {previewSource && (
+                                    <img src={previewSource} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
+                                )}
+                                {loadingUpload && <LoadingBox></LoadingBox>}
+                                {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
+                                <MDBInput className='mb-3 mt-3'
                                     id="descriptionField"
                                     label="Aprašymas"
                                     placeholder="Įveskite aprašymą"
@@ -109,43 +126,5 @@ export default function RestaurantCreateScreen(props) {
                 </MDBCol>
             </MDBRow>
         </MDBContainer>
-
-        // <div md={{ size: 4, offset: 1 }}>
-        //     <Form onSubmit={createHandler}>
-        //         <FormGroup row>
-        //             <Col md={{ size: 4, offset: 1 }}>
-        //                 <Label>Pridėti naują restoraną</Label>
-        //             </Col>
-        //         </FormGroup>
-        //         {loading && <LoadingBox></LoadingBox>}
-        //         {error && <MessageBox variant="danger">{error}</MessageBox>}
-        //         <FormGroup row>
-        //             <Label for="nameField" sm={1}>Restorano pavadinimas</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="text" name="name" id="nameField" placeholder="Įveskite restorano pavadinimą" onChange={(e) => setName(e.target.value)} />
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup row>
-        //             <Label for="imageFile" sm={1}>Paveikslėlis</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="file" name="imageUpload" id="imageField" label="Choose Image" onChange={uploadFileHandler} />
-        //                 <img src={`${process.env.REACT_APP_IMG}${image}`} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
-        //                 {loadingUpload && <LoadingBox></LoadingBox>}
-        //                 {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup row>
-        //             <Label for="descriptionField" sm={1}>Aprašymas</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="textarea" name="description" id="descriptionField" placeholder="Įveskite aprašymą" onChange={(e) => setDescription(e.target.value)} />
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup check row>
-        //             <Col sm={{ size: 10, offset: 1 }}>
-        //                 <Button type="submit">Pridėti</Button>
-        //             </Col>
-        //         </FormGroup>
-        //     </Form>
-        // </div>
     );
 }

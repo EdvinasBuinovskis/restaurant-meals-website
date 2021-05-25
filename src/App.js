@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-// import Header from './components/Header';
+import Header from './components/Header';
 
 import RestaurantListScreen from './screens/RestaurantListScreen';
 import RestaurantScreen from './screens/RestaurantScreen';
@@ -24,9 +24,7 @@ import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import AdminRoute from './components/AdminRoute';
 
-
-import HeaderMDB from './components/HeaderMDB';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 
 import Axios from 'axios';
 
@@ -35,8 +33,7 @@ function App() {
   process.env.NODE_ENV === 'development' ? Axios.defaults.baseURL = process.env.REACT_APP_DEV_API : Axios.defaults.baseURL = process.env.REACT_APP_PROD_API
   return (
     <div className="App">
-      {/* <Header /> */}
-      <HeaderMDB />
+      <Header />
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={RestaurantListScreen}></Route>
@@ -54,7 +51,7 @@ function App() {
           <PrivateRoute exact path="/mymeals/:id/edit" component={MealEditScreen}></PrivateRoute>
         </Switch>
       </BrowserRouter>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

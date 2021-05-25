@@ -20,8 +20,9 @@ export default function MealCreateScreen(props) {
     const [fat, setFat] = useState('');
     const [carbohydrates, setCarbohydrates] = useState('');
     const [servingWeight, setServingWeight] = useState('');
-    const [image, setImage] = useState('');
 
+    const [image, setImage] = useState('');
+    const [previewSource, setPreviewSource] = useState('');
 
     const dispatch = useDispatch();
 
@@ -44,30 +45,48 @@ export default function MealCreateScreen(props) {
         }
     }, [dispatch, success]);
 
+    useEffect(() => {
+        if (image !== '') {
+            dispatch(createMeal(name, restaurant_id, kcal, protein, fat, carbohydrates, servingWeight, userInfo._id, image));
+        }
+    }, [image]);
+
     const createHandler = (e) => {
         e.preventDefault();
-        dispatch(createMeal(name, restaurant_id, kcal, protein, fat, carbohydrates, servingWeight, userInfo._id, image));
+        uploadFileHandler();
     };
 
-    const uploadFileHandler = async (e) => {
+    const changeFileHandler = (e) => {
         const file = e.target.files[0];
-        const bodyFormData = new FormData();
-        bodyFormData.append('image', file);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSource(reader.result);
+        }
+    }
+
+    const uploadFileHandler = () => {
+        if (!previewSource) return
+        uploadImage(previewSource);
+    }
+
+    const uploadImage = async (base64EncodedImage) => {
         setLoadingUpload(true);
         try {
-            const { data } = await Axios.post('/api/uploads', bodyFormData, {
+            const { data } = await Axios.post('/api/uploads', JSON.stringify({ data: base64EncodedImage }), {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${userInfo.token}`,
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
                 },
             });
             setImage(data);
+            console.log(data);
             setLoadingUpload(false);
         } catch (error) {
             setErrorUpload(error.message);
             setLoadingUpload(false);
         }
-    };
+    }
 
 
     return (
@@ -149,14 +168,14 @@ export default function MealCreateScreen(props) {
                                     onChange={(e) => setServingWeight(e.target.value)}
                                 />
                                 <label>Pasirinkite paveikslėlį</label>
-                                <MDBInputGroup className='mb-3'>
-                                    <Input required type="file" name="imageUpload" id="imageField" onChange={uploadFileHandler} />
-                                    <img src={`${process.env.REACT_APP_IMG}${image}`} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
-                                    {loadingUpload && <LoadingBox></LoadingBox>}
-                                    {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
-                                </MDBInputGroup>
+                                <Input required type="file" name="imageUpload" id="imageField" onChange={changeFileHandler} className='mb-2' />
+                                {previewSource && (
+                                    <img src={previewSource} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
+                                )}
+                                {loadingUpload && <LoadingBox></LoadingBox>}
+                                {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
                                 <div className="text-center">
-                                    <MDBBtn color="primary" type="submit">
+                                    <MDBBtn color="primary" type="submit" className='mt-3'>
                                         Pridėti
                                     </MDBBtn>
                                 </div>
@@ -166,81 +185,5 @@ export default function MealCreateScreen(props) {
                 </MDBCol>
             </MDBRow>
         </MDBContainer>
-        // <div md={{ size: 4, offset: 1 }}>
-        //     <Form onSubmit={createHandler}>
-        //         <FormGroup row>
-        //             <Col md={{ size: 4, offset: 1 }}>
-        //                 <Label>Pridėti naują patiekalą</Label>
-        //             </Col>
-        //         </FormGroup>
-        //         {loading && <LoadingBox></LoadingBox>}
-        //         {error && <MessageBox variant="danger">{error}</MessageBox>}
-        //         <FormGroup row>
-        //             <Label for="nameField" sm={1}>Patiekalo pavadinimas</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="text" name="name" id="nameField" placeholder="Įveskite patiekalo pavadinimą" onChange={(e) => setName(e.target.value)} />
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup row>
-        //             <Label for="restaurantSelect" sm={1}>Restoranas</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 {loadingList ? (<LoadingBox></LoadingBox>) :
-        //                     errorList ? (<MessageBox variant="danger">{error}</MessageBox>) :
-        //                         (
-        //                             <Input type="select" name="select" id="restaurantSelect" onClick={(e) => setRestaurantId(e.target.value)}>
-        //                                 <option>-Pasirinkite restoraną-</option>
-        //                                 {restaurants.map(restaurant => (
-        //                                     <option key={restaurant._id} value={restaurant._id}>{restaurant.name}</option>
-        //                                 ))}
-        //                             </Input>
-        //                         )}
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup row>
-        //             <Label for="kcalField" sm={1}>Kalorijos</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="number" name="kcal" id="kcalField" placeholder="Įveskite kalorijas" onChange={(e) => setKcal(e.target.value)} />
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup row>
-        //             <Label for="proteinField" sm={1}>Baltymai</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="number" step="0.1" name="protein" id="proteinField" placeholder="Įveskite baltymų kiekį" onChange={(e) => setProtein(e.target.value)} />
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup row>
-        //             <Label for="fatField" sm={1}>Riebalai</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="number" step="0.1" name="fat" id="fatField" placeholder="Įveskite riebalų kiekį" onChange={(e) => setFat(e.target.value)} />
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup row>
-        //             <Label for="carbohydratesField" sm={1}>Angliavandeniai</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="number" step="0.1" name="carbohydrates" id="carbohydratesField" placeholder="Įveskite angliavandenių kiekį" onChange={(e) => setCarbohydrates(e.target.value)} />
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup row>
-        //             <Label for="servingWeightField" sm={1}>Porcijos svoris</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="number" name="servingWeight" id="servingWeightField" placeholder="Įveskite procijos svorį" onChange={(e) => setServingWeight(e.target.value)} />
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup row>
-        //             <Label for="imageFile" sm={1}>Paveikslėlis</Label>
-        //             <Col md={{ size: 4 }}>
-        //                 <Input required type="file" name="imageUpload" id="imageField" label="Choose Image" onChange={uploadFileHandler} />
-        //                 <img src={`${process.env.REACT_APP_IMG}${image}`} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
-        //                 {loadingUpload && <LoadingBox></LoadingBox>}
-        //                 {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
-        //             </Col>
-        //         </FormGroup>
-        //         <FormGroup check row>
-        //             <Col sm={{ size: 10, offset: 1 }}>
-        //                 <MDBBtn color="primary" type="submit">Pridėti</MDBBtn>
-        //             </Col>
-        //         </FormGroup>
-        //     </Form>
-        // </div>
     );
 }

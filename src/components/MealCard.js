@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardImage, MDBRipple, MDBCol } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardImage, MDBRipple, MDBCol, MDBIcon } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
 
 export default function MealCard(props) {
@@ -17,7 +17,13 @@ export default function MealCard(props) {
                         </a>
                     </MDBRipple>
                     <MDBCardBody>
-                        <MDBCardTitle>{meal.name}</MDBCardTitle>
+                        <MDBCardTitle>
+                            {meal.name}
+                            {meal.approved ?
+                                <MDBIcon className='ms-1' icon='check' size='sm' /> :
+                                <></>
+                            }
+                        </MDBCardTitle>
                     </MDBCardBody>
                 </MDBCard>
             </Link>
