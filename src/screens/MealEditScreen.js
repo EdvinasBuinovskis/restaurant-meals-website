@@ -79,6 +79,8 @@ export default function MealEditScreen(props) {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        if (kcalValidation() !== 'good')
+            return;
         if (previewSource) {
             uploadFileHandler();
             return;
@@ -108,6 +110,14 @@ export default function MealEditScreen(props) {
 
     const uploadFileHandler = () => {
         dispatch(uploadImage(previewSource));
+    }
+
+    const kcalValidation = () => {
+        const approxKcal = protein * 4 + fat * 9 + carbohydrates * 4;
+        const bias = 20;
+        if (approxKcal > (kcal + bias) || approxKcal < (kcal - bias))
+            return alert("Neteisingai įvedėte maistinę informaciją");
+        return 'good';
     }
 
     return (
@@ -155,7 +165,7 @@ export default function MealEditScreen(props) {
                                     placeholder="Įveskite kalorijas"
                                     type="number"
                                     required
-                                    onChange={(e) => setKcal(e.target.value)}
+                                    onChange={(e) => setKcal(Math.round(e.target.value))}
                                 />
                                 <MDBInput className='mb-3 active'
                                     value={protein}
