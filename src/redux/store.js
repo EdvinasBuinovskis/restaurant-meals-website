@@ -4,6 +4,7 @@ import { mealListReducer, mealDetailsReducer, mealCreateReducer, mealUpdateReduc
 import { restaurantListReducer, restaurantDetailsReducer, restaurantCreateReducer, restaurantUpdateReducer, restaurantDeleteReducer } from './reducers/restaurantReducers';
 import { userDetailsReducer, userRegisterReducer, userSigninReducer } from './reducers/userReducers'
 import { favoriteCreateReducer, favoriteDeleteReducer, favoriteListReducer } from './reducers/favoriteReducers';
+import { imageUploadReducer } from './reducers/imageReducers';
 
 const initialState = {
   userSignin: {
@@ -31,7 +32,9 @@ const reducer = combineReducers({
 
   favoriteList: favoriteListReducer,
   favoriteCreate: favoriteCreateReducer,
-  favoriteDelete: favoriteDeleteReducer
+  favoriteDelete: favoriteDeleteReducer,
+
+  imageUpload: imageUploadReducer
 
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

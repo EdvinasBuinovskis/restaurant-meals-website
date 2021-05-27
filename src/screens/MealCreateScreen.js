@@ -1,15 +1,13 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMeal } from '../redux/actions/mealActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Input } from 'reactstrap';
 import { listRestaurants } from '../redux/actions/restaurantActions';
-import Axios from 'axios';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBInputGroup, MDBInputGroupText, MDBRow } from 'mdb-react-ui-kit';
+import { uploadImage } from '../redux/actions/imageActions';
 
 export default function MealCreateScreen(props) {
 
@@ -21,7 +19,6 @@ export default function MealCreateScreen(props) {
     const [carbohydrates, setCarbohydrates] = useState('');
     const [servingWeight, setServingWeight] = useState('');
 
-    const [image, setImage] = useState('');
     const [previewSource, setPreviewSource] = useState('');
 
     const dispatch = useDispatch();
@@ -35,8 +32,8 @@ export default function MealCreateScreen(props) {
     const restaurantList = useSelector(state => state.restaurantList);
     const { loading: loadingList, error: errorList, restaurants } = restaurantList;
 
-    const [loadingUpload, setLoadingUpload] = useState(false);
-    const [errorUpload, setErrorUpload] = useState('');
+    const imageUpload = useSelector((state) => state.imageUpload);
+    const { success: uploadSuccess, error: uploadError, loading: uploadLoading, image } = imageUpload;
 
     useEffect(() => {
         dispatch(listRestaurants());
@@ -46,10 +43,10 @@ export default function MealCreateScreen(props) {
     }, [dispatch, success]);
 
     useEffect(() => {
-        if (image !== '') {
+        if (uploadSuccess) {
             dispatch(createMeal(name, restaurant_id, kcal, protein, fat, carbohydrates, servingWeight, userInfo._id, image));
         }
-    }, [image]);
+    }, [uploadSuccess]);
 
     const createHandler = (e) => {
         e.preventDefault();
@@ -67,27 +64,8 @@ export default function MealCreateScreen(props) {
 
     const uploadFileHandler = () => {
         if (!previewSource) return
-        uploadImage(previewSource);
+        dispatch(uploadImage(previewSource));
     }
-
-    const uploadImage = async (base64EncodedImage) => {
-        setLoadingUpload(true);
-        try {
-            const { data } = await Axios.post('/api/uploads', JSON.stringify({ data: base64EncodedImage }), {
-                headers: {
-                    'Content-type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
-                },
-            });
-            setImage(data);
-            console.log(data);
-            setLoadingUpload(false);
-        } catch (error) {
-            setErrorUpload(error.message);
-            setLoadingUpload(false);
-        }
-    }
-
 
     return (
         <MDBContainer>
@@ -172,8 +150,8 @@ export default function MealCreateScreen(props) {
                                 {previewSource && (
                                     <img src={previewSource} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
                                 )}
-                                {loadingUpload && <LoadingBox></LoadingBox>}
-                                {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
+                                {uploadLoading && <LoadingBox></LoadingBox>}
+                                {uploadError && (<MessageBox variant="danger">{uploadError}</MessageBox>)}
                                 <div className="text-center">
                                     <MDBBtn color="primary" type="submit" className='mt-3'>
                                         Pridėti

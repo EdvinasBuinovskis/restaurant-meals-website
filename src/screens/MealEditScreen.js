@@ -6,9 +6,9 @@ import { updateMeal, detailsMeal } from '../redux/actions/mealActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { listRestaurants } from '../redux/actions/restaurantActions';
-import Axios from 'axios';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBInputGroup, MDBInputGroupText, MDBRow } from 'mdb-react-ui-kit';
 import { Input } from 'reactstrap';
+import { uploadImage } from '../redux/actions/imageActions';
 
 export default function MealEditScreen(props) {
 
@@ -32,6 +32,9 @@ export default function MealEditScreen(props) {
 
     const restaurantList = useSelector(state => state.restaurantList);
     const { loading: loadingList, error: errorList, restaurants } = restaurantList;
+
+    const imageUpload = useSelector((state) => state.imageUpload);
+    const { success: uploadSuccess, error: uploadError, loading: uploadLoading, image: newImage } = imageUpload;
 
     const dispatch = useDispatch();
 
@@ -58,12 +61,28 @@ export default function MealEditScreen(props) {
     }, [meal, dispatch, mealId, successUpdate, props.history]);
 
     useEffect(() => {
-        if (previewSource !== '')
-            uploadFileHandler();
-    }, [previewSource]);
+        if (uploadSuccess) {
+            dispatch(updateMeal({
+                _id: mealId,
+                name,
+                restaurant_id,
+                kcal,
+                protein,
+                fat,
+                carbohydrates,
+                servingWeight,
+                image: newImage
+            })
+            );
+        }
+    }, [uploadSuccess]);
 
     const submitHandler = (e) => {
         e.preventDefault();
+        if (previewSource) {
+            uploadFileHandler();
+            return;
+        }
         dispatch(updateMeal({
             _id: mealId,
             name,
@@ -78,12 +97,6 @@ export default function MealEditScreen(props) {
         );
     };
 
-    const [loadingUpload, setLoadingUpload] = useState(false);
-    const [errorUpload, setErrorUpload] = useState('');
-
-    const userSignin = useSelector((state) => state.userSignin);
-    const { userInfo } = userSignin;
-
     const changeFileHandler = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -94,26 +107,7 @@ export default function MealEditScreen(props) {
     }
 
     const uploadFileHandler = () => {
-        if (!previewSource) return
-        uploadImage(previewSource);
-    }
-
-    const uploadImage = async (base64EncodedImage) => {
-        setLoadingUpload(true);
-        try {
-            const { data } = await Axios.post('/api/uploads', JSON.stringify({ data: base64EncodedImage }), {
-                headers: {
-                    'Content-type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
-                },
-            });
-            setImage(data);
-            console.log(data);
-            setLoadingUpload(false);
-        } catch (error) {
-            setErrorUpload(error.message);
-            setLoadingUpload(false);
-        }
+        dispatch(uploadImage(previewSource));
     }
 
     return (
@@ -202,14 +196,14 @@ export default function MealEditScreen(props) {
                                     required
                                     onChange={(e) => setServingWeight(e.target.value)}
                                 />
-                                <Input required type="file" name="imageUpload" id="imageField" onChange={changeFileHandler} className='mb-2' />
+                                <Input type="file" name="imageUpload" id="imageField" onChange={changeFileHandler} className='mb-2' />
                                 {!previewSource ? (
                                     <img src={`${process.env.REACT_APP_IMG}${image}`} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
                                 ) : (
                                     <img src={previewSource} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
                                 )}
-                                {loadingUpload && <LoadingBox></LoadingBox>}
-                                {errorUpload && (<MessageBox variant="danger">{errorUpload}</MessageBox>)}
+                                {uploadLoading && <LoadingBox></LoadingBox>}
+                                {uploadError && (<MessageBox variant="danger">{uploadError}</MessageBox>)}
                                 <div className="text-center">
                                     <MDBBtn color="primary" type="submit" className='mt-2'>
                                         Atnaujinti
