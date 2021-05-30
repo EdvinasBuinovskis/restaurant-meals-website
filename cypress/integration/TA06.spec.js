@@ -8,11 +8,11 @@ describe("TA6 sistemos naudotojo patalpinto patiekalo pašalinimas", () => {
 
     it('patiekalo tinklapio atidarymas', function () {
         cy.get(':nth-child(4) > [data-test=nav-link]').click();
-        cy.get('.list-group-item-action').click();
+        cy.contains('Mesainis1').click();
     });
 
     it('patiekalas pašalinamas', function () {
-        cy.get(':nth-child(2) > button.btn').click();
+        cy.get(':nth-child(3) > .fas').click();
     });
 
     it('naudotojas nukreipiamas į naudotojo patiekalų tinklapį', function () {
@@ -20,6 +20,6 @@ describe("TA6 sistemos naudotojo patalpinto patiekalo pašalinimas", () => {
     });
 
     it('patiekalas sėkmingai pašalintas', function () {
-        cy.get('.list-group-item-action').should('not.exist');
+        cy.contains('Mesainis1').should('not.exist');
     });
 })

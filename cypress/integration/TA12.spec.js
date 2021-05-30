@@ -1,6 +1,4 @@
 /* eslint-disable no-undef */
-
-
 describe("TA12 sistemos administratoriaus naujo restorano patalpinimas", () => {
 
     before(() => {
@@ -9,7 +7,7 @@ describe("TA12 sistemos administratoriaus naujo restorano patalpinimas", () => {
     })
 
     it('atidaromas restorano kūrimo tinklapis ir užpildoma informacija', function () {
-        cy.get('.btn').click();
+        cy.get('.fas').click();
         cy.get('#nameField').type('Restoranas1');
         cy.get('input[type="file"]').attachFile('restaurant1.jpg');
         cy.get('#descriptionField').type('Restoranas1 aprašymas');

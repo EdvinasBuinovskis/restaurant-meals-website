@@ -8,7 +8,7 @@ describe("TA13 sistemos administratoriaus patalpinto restorano redagavimas", () 
 
     it('atidaromas restorano redagavimo tinklapis', function () {
         cy.contains("Restoranas1").click();
-        cy.get('a.btn').click();
+        cy.get('.fa-edit').click();
     });
 
     it('redaguojami restorano duomenys', function () {

@@ -2,9 +2,9 @@
 describe("TA8 sistemoje patalpinto patiekalo paieška pagal restoraną", () => {
     it('restorano tinklapio atidarymas', function () {
         cy.visit("/");
-        cy.get('[href="/restaurants/6079722b2aadbb0710855d4a"] > .card').click();
+        cy.get('.card-title').contains("McDonald's").click();
     });
     it('atvaizduojami restorano patiekalai', function () {
-        cy.contains('Mėsainis');
+        cy.contains(/^Mėsainis$/);
     });
 })

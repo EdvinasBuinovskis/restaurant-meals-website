@@ -16,10 +16,9 @@ describe("TA14 sistemos administratoriaus pasirinkto patiekalo pažymėjimas „
         cy.contains(/^Mėsainis$/).click();
     });
     it('patiekalas patvirtinamas', function () {
-        cy.contains('Patvirtinti').click();
+        cy.get('.fa-thumbs-up').click();
     });
     it('patiekalas patvirtintas sėkmingai', function () {
-        cy.contains('Pašalinti patvirtinimą');
         cy.get('.card-title > .fa').should('exist');
     });
 })

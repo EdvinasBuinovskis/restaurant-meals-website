@@ -13,18 +13,16 @@ describe("TA9 sistemoje patalpintų patiekalų pridėjimas prie naudotojo įsimi
 
     it('patiekalo tinklapio atidarymas', function () {
         cy.get(':nth-child(2) > [data-test=nav-link]').click();
-        cy.contains('Mėsainis').click();
+        cy.contains(/^Mėsainis$/).click();
     });
 
     it('patiekalo pridėjimas prie įsimintų', function () {
-        cy.contains('Pridėti prie įsimintų');
-        cy.get(':nth-child(2) > :nth-child(1) > .btn').click();
-        cy.contains('Pašalinti iš įsimintų');
+        cy.get('.far').click();
     });
 
     it('patiekalas sėkmingai pridėtas prie įsimintų', function () {
         cy.get(':nth-child(3) > [data-test=nav-link]').click();
-        cy.contains('Mėsainis');
+        cy.contains(/^Mėsainis$/);
     });
 
 })

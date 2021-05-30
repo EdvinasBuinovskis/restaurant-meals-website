@@ -115,7 +115,7 @@ export default function RestaurantEditScreen(props) {
                                     required
                                     onChange={(e) => setName(e.target.value)}
                                 />
-                                <Input required type="file" name="imageUpload" id="imageField" onChange={changeFileHandler} className='mb-2' />
+                                <Input type="file" name="imageUpload" id="imageField" onChange={changeFileHandler} className='mb-2' />
                                 {!previewSource ? (
                                     <img src={`${process.env.REACT_APP_IMG}${image}`} style={{ maxWidth: '22rem', maxHeight: '22rem' }} />
                                 ) : (

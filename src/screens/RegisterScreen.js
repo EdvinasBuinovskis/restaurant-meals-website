@@ -101,7 +101,7 @@ export default function RegisterScreen(props) {
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                                 <MDBInput
-                                    id="passwordField"
+                                    id="confirmPasswordField"
                                     label="Patvirtinti slaptažodį"
                                     placeholder="Įveskite slaptažodį"
                                     type="password"
